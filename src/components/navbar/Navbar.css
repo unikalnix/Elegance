@@ -1,0 +1,90 @@
+.navbar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    backdrop-filter: blur(20px);
+    transition: 0.3s;
+}
+
+.navbar h1{
+    margin-left: 30px;
+    font-family: 'PlayFair Displa';
+    font-weight: 700;
+    font-size: 24px;
+    color: black;
+}
+
+.navbar ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    gap: 50px;
+    font-family: 'Inter';
+    text-transform: capitalize;
+}
+
+.navbar ul li{
+    position: relative;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    color: black;
+}
+
+.navbar ul li:last-child{
+    color:rgb(220, 38, 38);
+}
+
+.navbar ul li::after{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0.9px;
+    bottom: -4px;
+    left: 0;
+    background-color: black;
+    transition: 0.5s;
+}
+
+.navbar ul li:hover::after{
+    width: 100%;
+}
+
+.navbar-right{
+    display: flex;
+    margin-right: 30px;
+    align-items: center;
+    justify-content: center ;
+    gap: 20px;
+}
+
+.navbar-right *:not(span){
+    cursor: pointer;
+    font-family: 'Inter';  
+    width: 18px;  
+}
+
+.navbar-right .cart{
+    position: relative;
+}
+
+.navbar-right .cart span{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 12px;
+}

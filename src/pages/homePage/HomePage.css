@@ -1,0 +1,68 @@
+/* Category */
+.shop-by-category{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F8F8F8;
+    padding: 50px 0 0 0;
+}
+
+.shop-by-category--cards, .exclusive-collection--cards{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    margin-top: 50px;
+}
+
+.shop-by-category--cards--view-all-btn, .exclusive-collection--cards--view-all-btn{
+    position: absolute;
+    top: -34px;
+    right: 61px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(22, 22, 25);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 5px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.shop-by-category--cards--view-all-btn .shop-by-category--cards--arrow-right, .exclusive-collection--cards--view-all-btn .exclusive-collection--cards--arrow-right{
+    transition: transform 0.2s ease-in-out;
+}
+
+.shop-by-category--cards--view-all-btn:hover .shop-by-category--cards--arrow-right, .exclusive-collection--cards--view-all-btn:hover .exclusive-collection--cards--arrow-right{
+    transform: translateX(5px);
+}
+
+/* Exclusive */
+.exclusive-collection{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #FEFEFE;
+    padding: 50px 0 0 0;
+}
+/* Brands */
+.brands{
+    height: 300px;
+    background-color: #fafbfc;
+}
+
+.brand-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    flex-wrap: wrap;
+}
+
+.brand-image img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    opacity: 0.4;
+    -webkit-user-drag: none;
+}
