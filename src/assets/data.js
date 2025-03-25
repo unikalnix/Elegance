@@ -4,35 +4,35 @@ export const categories = [
     _id: "1",
     type: "category",
     title: "Men",
-    image: "src/assets/men.jpg",
+    image: "public/men.jpg",
     description: "Summer & Winter Collection",
   },
   {
     _id: "2",
     type: "category",
     title: "Women",
-    image: "src/assets/women.jpg",
+    image: "public/women.jpg",
     description: "Summer & Winter Collection",
   },
   {
     _id: "3",
     type: "category",
     title: "Kids",
-    image: "src/assets/kid.jpeg",
+    image: "public/kid.jpeg",
     description: "Summer & Winter Collection",
   },
   {
     _id: "4",
     type: "category",
     title: "Accessories",
-    image: "src/assets/accessory.jpg",
+    image: "public/accessory.jpg",
     description: "Complete Your Look",
   },
   {
     _id: "4",
     type: "category",
     title: "Accessories",
-    image: "src/assets/accessory.jpg",
+    image: "public/accessory.jpg",
     description: "Complete Your Look",
   },
 ];
@@ -43,7 +43,7 @@ export const exclusiveCollection = [
     title:"Premium Cotton Shirt",
     price:"89.99",
     isNew: true,
-    image:"src/assets/shirt.jpeg"
+    image:"public/shirt.jpeg"
   },
   {
     _id: "2",
@@ -51,7 +51,7 @@ export const exclusiveCollection = [
     title:"Designer Slim-Fit Jeans",
     price:"129.99",
     isNew: false,
-    image:"src/assets/jeans.jpg"
+    image:"public/jeans.jpg"
   },
   {
     _id: "3",
@@ -59,7 +59,7 @@ export const exclusiveCollection = [
     title:"Merino Wool Sweater",
     price:"159.99",
     isNew: true,
-    image:"src/assets/sweater.jpeg"
+    image:"public/sweater.jpeg"
   },
   {
     _id: "4",
@@ -67,7 +67,7 @@ export const exclusiveCollection = [
     title:"Italian Leather Loafers",
     price:"199.99",
     isNew: false,
-    image:"src/assets/shoes.jpg"
+    image:"public/shoes.jpg"
   },
   {
     _id: "5",
@@ -75,33 +75,33 @@ export const exclusiveCollection = [
     title:"Italian Leather Loafers",
     price:"199.99",
     isNew: false,
-    image:"src/assets/shoes.jpg"
+    image:"public/shoes.jpg"
   },
 ];
 export const brands = [{
   _id: "1",
   title: "Versace",
-  image: "src/assets/versace-removebg-preview.png",
+  image: "public/versace-removebg-preview.png",
 },
 {
   _id: "2",
   title: "Gucci",
-  image: "src/assets/gucci-removebg-preview.png",
+  image: "public/gucci-removebg-preview.png",
 },
 {
   _id: "3",
   title: "Prada",
-  image: "src/assets/prada-removebg-preview.png",
+  image: "public/prada-removebg-preview.png",
 },
 {
   _id: "4",
   title: "Dior",
-  image: "src/assets/dior-removebg-preview.png",
+  image: "public/dior-removebg-preview.png",
 },
 {
   _id: "5",
   title: "Chanel",
-  image: "src/assets/chanel-removebg-preview.png",
+  image: "public/chanel-removebg-preview.png",
 },
 {
   _id: "6",
@@ -116,7 +116,7 @@ export const saleItems = [
     title:"Premium Cotton Shirt",
     price:"89.99",
     isOnSale: true,
-    image:"src/assets/shirt.jpeg",
+    image:"public/shirt.jpeg",
     discountPercentage: 20,
     originalPrice: 109.99
   },
@@ -126,7 +126,7 @@ export const saleItems = [
     title:"Designer Slim-Fit Jeans",
     price:"129.99",
     isOnSale: true,
-    image:"src/assets/jeans.jpg",
+    image:"public/jeans.jpg",
     discountPercentage: 10,
     originalPrice: 149.99
   },
@@ -136,7 +136,7 @@ export const saleItems = [
     title:"Merino Wool Sweater",
     price:"159.99",
     isOnSale: true,
-    image:"src/assets/sweater.jpeg",
+    image:"public/sweater.jpeg",
     discountPercentage: 15,
     originalPrice: 179.99
   },
@@ -146,7 +146,7 @@ export const saleItems = [
     title:"Italian Leather Loafers",
     price:"199.99",
     isOnSale: true,
-    image:"src/assets/shoes.jpg",
+    image:"public/shoes.jpg",
     discountPercentage: 25,
     originalPrice: 229.99
   },
@@ -156,7 +156,7 @@ export const saleItems = [
     title:"Italian Leather Loafers",
     price:"199.99",
     isOnSale: true,
-    image:"src/assets/shoes.jpg",
+    image:"public/shoes.jpg",
     discountPercentage: 25,
     originalPrice: 229.99
   }
