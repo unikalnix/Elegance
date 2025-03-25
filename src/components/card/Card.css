@@ -91,6 +91,19 @@
     font-size: 16px;
 }
 
+.sale--price{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sale--price .original-price{
+    text-decoration: line-through;
+    color: rgb(9, 9, 11);
+    font-weight: 400;
+    font-size: 14px;
+}
+
 .add-to-cart{
     position: absolute;
     bottom: 0;
@@ -121,17 +134,24 @@
     cursor: pointer;
 }
 
-.flags .new-flag{
+.flags .new-flag, .flags .sale-flag{
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: black;
     color: rgb(255, 255, 255);
     font-weight: 400;
     font-size: 12px;
     padding: 4px 8px;
     border-radius: 5px;
 }
+
+.flags .new-flag{
+    background-color: black;
+}
+
+.flags .sale-flag{
+    background-color: #DE5A5A;
+}  
 
 .flags .favorite-flag{
     position: absolute;

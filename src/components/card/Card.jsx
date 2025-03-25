@@ -9,6 +9,9 @@ const Card = ({
   description,
   price,
   isNew,
+  isOnSale,
+  discountPercentage,
+  originalPrice,
 }) => {
     const [isHovered, setIsHovered] = useState(false);
   return (
@@ -43,7 +46,14 @@ const Card = ({
       {type === "sale" && (
         <div className="sale-content">
           <h3>{title}</h3>
+          <div className="sale--price">
           <p>${price}</p>
+          {
+            isOnSale && (
+              <s className="original-price">${originalPrice}</s>
+            )
+          }
+          </div>
         </div>
       )}
 
@@ -51,6 +61,7 @@ const Card = ({
         type === "sale" && (
           <div className="flags">
             {isNew && <span className="new-flag">New</span>}
+            {isOnSale && <span className="sale-flag">{discountPercentage}%</span>}
             <Heart className="favorite-flag" size={30} />
           </div>
         )

@@ -18,10 +18,14 @@
 }
 
 .hero-container h1{
-    font-family: playfair display;
+    font-family: Playfair display;
     font-size: 60px;
     font-weight: 700;
     color: black;
+}
+
+.hero-container h1 span{
+    font-family: playfair display;
 }
 
 .hero-container p{
@@ -64,4 +68,66 @@
 
 .hero-container .btn:last-child:hover{
     background-color: rgba(246, 243, 243, 0.381);
+}
+
+/* 320px to 600px */
+@media only screen and (max-width:600px) and (min-width:320px){
+   .hero-content{
+    width: 75%;
+    align-items: start;
+   }
+   .hero-content h1{
+    font-size: 36px;
+    text-align: start;
+    margin-bottom: 10px;
+    line-height: 40px;
+   }
+   .hero-content h1 span{
+    font-style: italic;
+    font-family: Playfair Display;
+   }
+   .header-btns{
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+   }
+   .header-btns button{
+    width: 100%;
+   }
+}
+/* 600px to 1024px */
+@media only screen and (max-width:1024px) and (min-width:600px){
+    .hero-content{
+        width: 80%;
+        margin: auto;
+    }
+    .hero-content h1{
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    .hero-content h1 span{
+        font-style: italic;
+        font-family: Playfair Display;
+    }
+    .hero-content p{
+        width: 80%;
+    }
+}
+/* 1024px to above */
+@media only screen and (min-width:1024px){
+    .hero-content{
+        width: 60%;
+        margin: auto;
+    }
+    .hero-content h1{
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+    .hero-content h1 span{
+        font-style: italic;
+        font-family: Playfair Display;
+    }
+    .hero-content p{
+        width: 80%;
+    }
 }

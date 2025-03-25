@@ -15,7 +15,7 @@ const Hero = () => {
   return (
     <section className='hero-container' onMouseMove={handleMouseMove}>
       <div className='hero-content' style={{ transform: `translate(${transform.x}px, ${transform.y}px)` }}>
-        <h1>Redefine your style</h1>
+        <h1>Redefine your <span>style</span></h1>
         <p>Discover our new collection that combines timeless elegance with contemporary design. Crafted for those who appreciate quality and style.</p>
         <div className="header-btns">
           <button className='btn'>Shop Now<ArrowRight className='left-arrow' /></button>

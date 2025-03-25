@@ -2,11 +2,15 @@ import React from "react";
 import "./HomePage.css";
 import Hero from "../../components/hero/Hero";
 import Card from "../../components/card/Card";
-import { brands, categories, exclusiveCollection } from "../../assets/data";
+import { brands, categories, exclusiveCollection, saleItems } from "../../assets/data";
 import { ArrowRight } from "lucide-react";
 import Title from "../../components/title/Title";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const HomePage = () => {
+  const isMobile = useIsMobile();
+  console.log(isMobile);
+  
   return (
     <>
       {/* Hero section */}
@@ -20,10 +24,10 @@ const HomePage = () => {
         <div className="shop-by-category--cards">
           {categories.length > 4 && (
             <h6 className="shop-by-category--cards--view-all-btn">
-              View all categories{" "}
+              View all categories
               <ArrowRight
                 className="shop-by-category--cards--arrow-right"
-                size={20}
+                size={isMobile ? 16 : 20}
               />
             </h6>
           )}
@@ -45,9 +49,9 @@ const HomePage = () => {
           description="Discover our premium selection of handcrafted pieces"
         />
         <div className="exclusive-collection--cards">
-          {categories.length > 4 && (
+          {exclusiveCollection.length > 4 && (
             <h6 className="exclusive-collection--cards--view-all-btn">
-              View all collection{" "}
+              View all collection
               <ArrowRight
                 className="exclusive-collection--cards--arrow-right"
                 size={20}
@@ -77,6 +81,38 @@ const HomePage = () => {
         <div className="brand-image">
           {brands.map((item) => {
             return <img key={item._id} src={item.image} alt={item.title} />;
+          })}
+        </div>
+      </section>
+      {/* Season sale */}
+      <section className="season-sale">
+          <Title
+            title="Season Sale"
+            description="Limited time offers on premium pieces from our collection"
+          />
+            <div className="season-sale--cards">
+          {saleItems.length > 4 && (
+            <h6 className="season-sale--cards--view-all-btn">
+              View all Items
+              <ArrowRight
+                className="season-sale--cards--arrow-right"
+                size={20}
+              />
+            </h6>
+          )}
+          {saleItems.slice(0, 4).map((item) => {
+            return (
+              <Card
+                key={item._id}
+                type={item.type}
+                image={item.image}
+                title={item.title}
+                price={item.price}
+                isOnSale={item.isOnSale}
+                discountPercentage={item.discountPercentage}
+                originalPrice={item.originalPrice}
+              />
+            );
           })}
         </div>
       </section>
