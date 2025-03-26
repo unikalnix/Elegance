@@ -36,10 +36,6 @@
     color: black;
 }
 
-.navbar ul .link:last-child li{
-    color:rgb(220, 38, 38);
-}
-
 .navbar ul li::after{
     content: '';
     position: absolute;

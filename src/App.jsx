@@ -6,6 +6,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import SearchModal from "./components/searchModal/SearchModal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ShopPage from "./pages/shopPage/ShopPage";
+import NotFound from "./pages/notFound/NotFound";
 
 const App = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -33,6 +34,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>

@@ -36,7 +36,9 @@ const Navbar = ({ sidebar, toggleSidebar, searchModal, toggleSearchModal }) => {
         <Link className="link" to='/'><h1>Elegance</h1></Link>
         <ul>
           {navItems.map((navItem, index) => {
-            return <Link key={index} className="link" to='/shop'><li>{navItem}</li></Link>;
+            return <Link key={index} className="link" to='/shop'><li style={{
+              color: navItem === 'sale' && 'rgb(220, 38, 38)'
+            }}>{navItem}</li></Link>;
           })}
         </ul>
         <div className="navbar-right">

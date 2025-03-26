@@ -1,4 +1,4 @@
-export const navItems = ["shop", "men", "women", "kids", "accessories", "sale"];
+export const navItems = ["shop", "men", "women", "kids", "accessories", "sale", "about", "contact"];
 export const categories = ["men", "women", "kids", "accessories"]
 export const homeCategoriesData = [
   {

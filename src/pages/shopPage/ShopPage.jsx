@@ -4,9 +4,11 @@ import Title from "../../components/title/Title";
 import { Filter, MoveLeftIcon, MoveRightIcon } from "lucide-react";
 import { categories, collection } from "../../assets/data";
 import Card from "../../components/card/Card";
-import  useIsMobile from "../../hooks/useIsMobile"
-
+import useIsMobile from "../../hooks/useIsMobile";
+import { useLocation } from "react-router-dom";
+import NoProductFound from "../../components/noProductFound/NoProductFound";
 const ShopPage = () => {
+  let sortedCollection = [...collection];
   const itemsPerPage = 12;
   const [sort, setSort] = useState("all");
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -15,13 +17,15 @@ const ShopPage = () => {
   const [priceRange, setPriceRange] = useState([0, 300]);
   const isMobile = useIsMobile();
   const [filterBar, setFilterBar] = useState(isMobile);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchQuery = queryParams.get("search") || "";
 
   const onChangeHandler = (e) => {
     setSort(e.target.value);
   };
 
   const getSortedCollection = () => {
-    let sortedCollection = [...collection];
     if (selectedCategories.length > 0) {
       sortedCollection = sortedCollection.filter((item) =>
         selectedCategories.includes(item.category)
@@ -29,6 +33,11 @@ const ShopPage = () => {
     }
     if (isSaleChecked) {
       sortedCollection = sortedCollection.filter((item) => item.isOnSale);
+    }
+    if (searchQuery) {
+      sortedCollection = sortedCollection.filter((item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
     sortedCollection = sortedCollection.filter(
       (item) => item.price >= priceRange[0] && item.price <= priceRange[1]
@@ -82,6 +91,12 @@ const ShopPage = () => {
   );
   const totalPages = Math.ceil(getSortedCollection().length / itemsPerPage);
 
+  if(sortedCollection.length <= 0){
+    return (
+        <NoProductFound/>
+    )
+  }
+
   return (
     <section>
       <Title
@@ -90,11 +105,12 @@ const ShopPage = () => {
       />
       <div className="shop-container">
         <aside
-        style={{
-          position: filterBar && 'fixed',
-          transform: filterBar && 'translateY(-200%)'
-        }}
-        className="filters">
+          style={{
+            position: filterBar && "fixed",
+            transform: filterBar && "translateY(-200%)",
+          }}
+          className="filters"
+        >
           <div className="top-layer">
             <h1>Filters</h1>
             <h2 onClick={handleClearAll} style={{ cursor: "pointer" }}>
@@ -156,10 +172,15 @@ const ShopPage = () => {
               <option value="low to high">Low to High</option>
               <option value="high to low">High to Low</option>
             </select>
-             {/* Sort and filter */}
-      {isMobile && <div className="sort-and-filter">
-        <Filter onClick={() => setFilterBar(prev => !prev)} stroke="rgb(116, 103, 117)"/>
-        </div>}
+            {/* Sort and filter */}
+            {isMobile && (
+              <div className="sort-and-filter">
+                <Filter
+                  onClick={() => setFilterBar((prev) => !prev)}
+                  stroke="rgb(116, 103, 117)"
+                />
+              </div>
+            )}
           </div>
           <div className="middle-layer">
             {paginatedCollection.map((item) => {
