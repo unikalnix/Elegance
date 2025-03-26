@@ -42,10 +42,6 @@
   background-color: black;
 }
 
-.sidebar ul li:last-child {
-  color: rgb(220, 38, 38);
-}
-
 .cross-icon {
   display: flex;
   align-items: center;

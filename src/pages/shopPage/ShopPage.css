@@ -79,6 +79,8 @@
     gap: 10px;
 }
 
+.filters-checkbox-field:last-child{display: none;}
+
 .filters .bottom-layer h1{
     font-size: 16px;
     font-weight: 500;

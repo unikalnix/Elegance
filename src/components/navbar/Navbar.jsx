@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import { navItems } from "../../assets/data";
+import { navItems, categories } from "../../assets/data";
 import { Search, ShoppingCart, User, Menu } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link } from "react-router-dom";
@@ -33,16 +33,37 @@ const Navbar = ({ sidebar, toggleSidebar, searchModal, toggleSearchModal }) => {
           boxShadow: scroll > 20 ? "0 1px 4px rgba(0, 0, 0, 0.1)" : "none",
         }}
       >
-        <Link className="link" to='/'><h1>Elegance</h1></Link>
+        <Link className="link" to="/">
+          <h1>Elegance</h1>
+        </Link>
         <ul>
           {navItems.map((navItem, index) => {
-            return <Link key={index} className="link" to='/shop'><li style={{
-              color: navItem === 'sale' && 'rgb(220, 38, 38)'
-            }}>{navItem}</li></Link>;
+            return (
+              <Link
+                onClick={() => {
+                  let category = categories.filter((category) => category === navItem);
+                  let isFound = category.toString() !== "" ? true : false;
+                  if (isFound) {
+                    localStorage.setItem("category", category);
+                  }
+                }}
+                key={index}
+                className="link"
+                to="/shop"
+              >
+                <li
+                  style={{
+                    color: navItem === "sale" && "rgb(220, 38, 38)",
+                  }}
+                >
+                  {navItem}
+                </li>
+              </Link>
+            );
           })}
         </ul>
         <div className="navbar-right">
-          <Search onClick={toggleSearchModal}/>
+          <Search onClick={toggleSearchModal} />
           <User />
           <div className="cart">
             <ShoppingCart />

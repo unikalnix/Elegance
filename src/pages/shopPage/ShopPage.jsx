@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import Title from "../../components/title/Title";
 import { Filter, MoveLeftIcon, MoveRightIcon } from "lucide-react";
@@ -60,6 +60,7 @@ const ShopPage = () => {
     }
     return sortedCollection;
   };
+  const totalPages = Math.ceil(getSortedCollection().length / itemsPerPage);
 
   const handleCategoryChange = (e) => {
     const { value, checked } = e.target;
@@ -85,16 +86,24 @@ const ShopPage = () => {
     setCurrentPage(1);
   };
 
+  const storedCategory = localStorage.getItem("category");
+  useEffect(() => {
+    if (storedCategory) {
+      if (storedCategory === "sale") {
+        setIsSaleChecked(true);
+      } else {
+        setSelectedCategories((prev) => [...prev, storedCategory]);
+      }
+    }
+  }, [storedCategory]);
+
   const paginatedCollection = getSortedCollection().slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  const totalPages = Math.ceil(getSortedCollection().length / itemsPerPage);
 
-  if(sortedCollection.length <= 0){
-    return (
-        <NoProductFound/>
-    )
+  if (sortedCollection.length <= 0) {
+    return <NoProductFound />;
   }
 
   return (
