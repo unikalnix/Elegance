@@ -7,15 +7,20 @@ import SearchModal from "./components/searchModal/SearchModal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ShopPage from "./pages/shopPage/ShopPage";
 import NotFound from "./pages/notFound/NotFound";
+import AuthModal from "./components/authmodal/AuthModal";
 
 const App = () => {
   const [sidebar, setSidebar] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
+  const [authModal, setAuthModal] = useState(false);
   const toggleSearchModal = () => {
     setSearchModal((prev) => !prev);
   };
   const toggleSidebar = () => {
     setSidebar((prev) => !prev);
+  };
+  const toggleAuthModal = () => {
+    setAuthModal((prev) => !prev);
   };
   return (
     <>
@@ -25,7 +30,10 @@ const App = () => {
           isOpen={searchModal}
           toggleSearchModal={toggleSearchModal}
         />
+        <AuthModal isOpen={authModal} toggleAuthModal={toggleAuthModal} />
         <Navbar
+        authModal={authModal}
+        toggleAuthModal={toggleAuthModal}
           sidebar={sidebar}
           toggleSidebar={toggleSidebar}
           searchModal={searchModal}

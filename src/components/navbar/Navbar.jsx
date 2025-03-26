@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { navItems, categories } from "../../assets/data";
-import { Search, ShoppingCart, User, Menu } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, LogIn } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link } from "react-router-dom";
+import useIsLogin from "../../hooks/useIsLogin";
 
-const Navbar = ({ sidebar, toggleSidebar, searchModal, toggleSearchModal }) => {
+const Navbar = ({
+  sidebar,
+  toggleSidebar,
+  searchModal,
+  toggleSearchModal,
+  authModal,
+  toggleAuthModal,
+}) => {
   const [scroll, setScroll] = useState(0);
   const isMobile = useIsMobile();
+  const isLoggedIn = useIsLogin();
+
   const handleScroll = () => {
     setScroll(window.scrollY);
   };
@@ -18,12 +28,12 @@ const Navbar = ({ sidebar, toggleSidebar, searchModal, toggleSearchModal }) => {
     };
   }, []);
   useEffect(() => {
-    if (sidebar || searchModal) {
+    if (sidebar || searchModal || authModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [sidebar, searchModal]);
+  }, [sidebar, searchModal, authModal]);
   return (
     <>
       <nav
@@ -41,7 +51,9 @@ const Navbar = ({ sidebar, toggleSidebar, searchModal, toggleSearchModal }) => {
             return (
               <Link
                 onClick={() => {
-                  let category = categories.filter((category) => category === navItem);
+                  let category = categories.filter(
+                    (category) => category === navItem
+                  );
                   let isFound = category.toString() !== "" ? true : false;
                   if (isFound) {
                     localStorage.setItem("category", category);
@@ -64,11 +76,16 @@ const Navbar = ({ sidebar, toggleSidebar, searchModal, toggleSearchModal }) => {
         </ul>
         <div className="navbar-right">
           <Search onClick={toggleSearchModal} />
-          <User />
-          <div className="cart">
-            <ShoppingCart />
-            <span>10</span>
-          </div>
+          {!isLoggedIn && <LogIn onClick={toggleAuthModal} />}
+          {isLoggedIn && (
+            <>
+              <User />
+              <div className="cart">
+                <ShoppingCart />
+                <span>10</span>
+              </div>
+            </>
+          )}
           {isMobile && <Menu onClick={toggleSidebar} />}
         </div>
       </nav>
