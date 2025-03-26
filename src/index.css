@@ -24,3 +24,7 @@ html, body{
    font-weight: 500;
    font-size: 14px;
 }
+
+.link{
+    text-decoration: none;
+}

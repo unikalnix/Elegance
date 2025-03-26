@@ -1,0 +1,195 @@
+.shop-container {
+  display: flex;
+}
+
+.filters {
+  position: sticky;
+  left: 0;
+  top: 50px;
+  width: 30%;
+  height: 450px;
+  padding: 20px 30px;
+}
+
+.filters .top-layer h1{
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.filters .top-layer h2{
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(107, 114, 128);
+    cursor: pointer;
+}
+
+.filters .top-layer, .filters .middle-layer, .filters .bottom-layer{
+    margin-bottom: 40px;
+}
+
+.filters .top-layer, .filters .filters--category-title, .filters--price-range-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filters .middle-layer h1{
+    font-weight: 500;
+    font-size: 16px;
+    color: rgb(9, 9, 11);
+    margin-bottom: 20px;
+}
+
+.filters .filters--checkbox-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 20px;
+}
+
+.filters .filters--checkbox-buttons input{
+    cursor: pointer;
+}
+
+.filters .filters--checkbox-buttons label{
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(9, 9, 11);
+    text-transform: capitalize;
+}
+
+.filters .filters-salecheckbox-field{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+
+.filters .filters-salecheckbox-field label{
+    color: #DC2828;
+    font-size: 14px;
+}
+
+.filters-checkbox-field{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+
+.filters .bottom-layer h1{
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(9, 9, 11);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.filters .bottom-layer input{
+    width: 100%;
+    cursor: pointer;
+}
+
+.filters--price-range-prices{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 7px;
+}
+
+.shop-main {
+  width: 70%;
+  padding: 20px 0;
+}
+
+.shop-main .top-layer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.shop-main .top-layer > h1{
+    font-size: 16px;
+    font-weight: 400;
+    color:rgb(107, 114, 128);
+}
+
+.shop-main .top-layer select{
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.shop-main .top-layer select:hover{
+    border-color: #777;
+}
+
+.shop-main .top-layer select:focus{
+    outline: none;
+    border-color: #444;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.shop-main .middle-layer{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap:40px;
+}
+
+.shop-main .bottom-layer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.shop-main .bottom-layer div{
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.shop-main .bottom-layer div:nth-child(2){
+    font-size: 16px;
+}
+
+.shop-main .bottom-layer div:first-child, .shop-main .bottom-layer div:last-child{
+    background-color: #77777723;
+    cursor: pointer;
+    width: 50px;
+}
+.shop-main .bottom-layer div:first-child:hover, .shop-main .bottom-layer div:last-child:hover{
+    background-color: #7777772b;
+}
+
+@media only screen and (max-width:870px){
+    .shop-container{
+        flex-direction: column;
+    }
+
+    
+    .filters, .shop-main{
+        width: 100%;
+    }
+    .filters{
+        position: static;
+    }
+    .shop-main{
+        padding: 30px;
+    }
+}

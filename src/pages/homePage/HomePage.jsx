@@ -2,14 +2,13 @@ import React from "react";
 import "./HomePage.css";
 import Hero from "../../components/hero/Hero";
 import Card from "../../components/card/Card";
-import { brands, categories, exclusiveCollection, saleItems } from "../../assets/data";
+import { brands, homeCategoriesData, collection } from "../../assets/data";
 import { ArrowRight } from "lucide-react";
 import Title from "../../components/title/Title";
 import useIsMobile from "../../hooks/useIsMobile";
 
 const HomePage = () => {
   const isMobile = useIsMobile();
-  console.log(isMobile);
   
   return (
     <>
@@ -22,7 +21,7 @@ const HomePage = () => {
           description="Explore our curated collection of products for every need and occasion"
         />
         <div className="shop-by-category--cards">
-          {categories.length > 4 && (
+          {homeCategoriesData.length > 4 && (
             <h6 className="shop-by-category--cards--view-all-btn">
               View all categories
               <ArrowRight
@@ -31,7 +30,7 @@ const HomePage = () => {
               />
             </h6>
           )}
-          {categories.slice(0, 4).map((item) => (
+          {homeCategoriesData.slice(0, 4).map((item) => (
             <Card
               key={item._id}
               type={item.type}
@@ -49,7 +48,7 @@ const HomePage = () => {
           description="Discover our premium selection of handcrafted pieces"
         />
         <div className="exclusive-collection--cards">
-          {exclusiveCollection.length > 4 && (
+          {collection.length > 4 && (
             <h6 className="exclusive-collection--cards--view-all-btn">
               View all collection
               <ArrowRight
@@ -58,7 +57,7 @@ const HomePage = () => {
               />
             </h6>
           )}
-          {exclusiveCollection.slice(0, 4).map((item) => {
+          {collection.slice(0, 4).map((item) => {
             return (
               <Card
                 key={item._id}
@@ -91,7 +90,7 @@ const HomePage = () => {
             description="Limited time offers on premium pieces from our collection"
           />
             <div className="season-sale--cards">
-          {saleItems.length > 4 && (
+          {collection.length > 4 && (
             <h6 className="season-sale--cards--view-all-btn">
               View all Items
               <ArrowRight
@@ -100,7 +99,7 @@ const HomePage = () => {
               />
             </h6>
           )}
-          {saleItems.slice(0, 4).map((item) => {
+          {collection.slice(0, 4).map((item) => {
             return (
               <Card
                 key={item._id}
