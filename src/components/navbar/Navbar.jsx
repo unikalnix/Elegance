@@ -61,7 +61,13 @@ const Navbar = ({
                 }}
                 key={index}
                 className="link"
-                to="/shop"
+                to={
+                  navItem === "about"
+                    ? "/about"
+                    : navItem === "contact"
+                    ? "/contact"
+                    : "/shop"
+                }
               >
                 <li
                   style={{
@@ -81,7 +87,9 @@ const Navbar = ({
             <>
               <User />
               <div className="cart">
-                <ShoppingCart />
+                <Link className="link text-black" to="/checkout">
+                  <ShoppingCart />
+                </Link>
                 <span>10</span>
               </div>
             </>

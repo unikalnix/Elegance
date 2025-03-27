@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import Navbar from "./components/navbar/Navbar";
-import HomePage from "./pages/homePage/HomePage";
+import HomePage from "./pages/home-page/HomePage";
 import Footer from "./components/footer/Footer";
 import Sidebar from "./components/sidebar/Sidebar";
-import SearchModal from "./components/searchModal/SearchModal";
+import SearchModal from "./components/search-modal/SearchModal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ShopPage from "./pages/shopPage/ShopPage";
-import NotFound from "./pages/notFound/NotFound";
-import AuthModal from "./components/authmodal/AuthModal";
+import ShopPage from "./pages/shop-page/ShopPage";
+import NotFound from "./pages/not-found-page/NotFound";
+import AuthModal from "./components/auth-modal/AuthModal";
+import Checkout from "./pages/checkout-page/Checkout";
+import Orders from "./pages/orders-page/Orders";
+import Dashboard from "./pages/dashboard/Dashboard";
+import OrderDetails from "./pages/order-details/OrderDetails";
 
 const App = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -42,6 +46,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/order-details/:id" element={<OrderDetails />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />

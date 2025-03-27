@@ -6,7 +6,7 @@ import { categories, collection } from "../../assets/data";
 import Card from "../../components/card/Card";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useLocation } from "react-router-dom";
-import NoProductFound from "../../components/noProductFound/NoProductFound";
+import NoProductFound from "../../components/no-product-found/NoProductFound";
 const ShopPage = () => {
   let sortedCollection = [...collection];
   const itemsPerPage = 12;

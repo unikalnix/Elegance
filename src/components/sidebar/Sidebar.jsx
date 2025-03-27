@@ -15,7 +15,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <ul>
         {navItems.map((item, index) => {
           return (
-            <Link to="/shop">
+            <Link  key={index} className="link text-black" to={
+              item === "about"
+                ? "/about"
+                : item === "contact"
+                ? "/contact"
+                : "/shop"
+            }>
               <li
                 style={{
                   color: item === "sale" && "rgb(220, 38, 38)",
@@ -30,7 +36,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   }
                   toggleSidebar();
                 }}
-                key={index}
+               
               >
                 {item}
               </li>
