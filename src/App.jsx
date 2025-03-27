@@ -12,6 +12,8 @@ import Checkout from "./pages/checkout-page/Checkout";
 import Orders from "./pages/orders-page/Orders";
 import Dashboard from "./pages/dashboard/Dashboard";
 import OrderDetails from "./pages/order-details/OrderDetails";
+import Contact from "./pages/contact-page/Contact";
+import About from "./pages/about-page/About";
 
 const App = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -46,6 +48,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />

@@ -13,7 +13,8 @@ const Orders = () => {
         <span>Orders</span>
       </p>
 
-      <table className="orders__table">
+    <div className="orders__table-container">
+    <table className="orders__table">
         <thead className="orders__table-head">
           <tr className="orders__table-row">
             <th className="orders__table-header">Order ID</th>
@@ -56,6 +57,7 @@ const Orders = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

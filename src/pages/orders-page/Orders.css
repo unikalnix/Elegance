@@ -32,6 +32,11 @@
   cursor: auto;
 }
 
+.orders__table-container{
+  min-width: 320px;
+  overflow: auto;
+}
+
 .orders__table {
   width: 100%;
   border-collapse: collapse;
@@ -113,4 +118,10 @@
   align-items: center;
   justify-content: start;
   gap: 20px;
+}
+
+@media only screen and (min-width:320px) and (max-width:1024px){
+  .orders__table{
+    width: 200%;
+  }
 }
