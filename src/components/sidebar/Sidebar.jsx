@@ -3,6 +3,7 @@ import { categories } from "../../assets/data";
 import { navItems } from "../../assets/data";
 import "./Sidebar.css";
 import { X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
@@ -14,24 +15,26 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <ul>
         {navItems.map((item, index) => {
           return (
-            <li
-              style={{
-                color: item === "sale" && "rgb(220, 38, 38)",
-              }}
-              onClick={() => {
-                let category = categories.filter(
-                  (category) => category === item
-                );
-                let isFound = category.toString() !== "" ? true : false;
-                if (isFound) {
-                  localStorage.setItem("category", category);
-                }
-                toggleSidebar();
-              }}
-              key={index}
-            >
-              {item}
-            </li>
+            <Link to="/shop">
+              <li
+                style={{
+                  color: item === "sale" && "rgb(220, 38, 38)",
+                }}
+                onClick={() => {
+                  let category = categories.filter(
+                    (category) => category === item
+                  );
+                  let isFound = category.toString() !== "" ? true : false;
+                  if (isFound) {
+                    localStorage.setItem("category", category);
+                  }
+                  toggleSidebar();
+                }}
+                key={index}
+              >
+                {item}
+              </li>
+            </Link>
           );
         })}
       </ul>

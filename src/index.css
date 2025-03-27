@@ -28,3 +28,7 @@ html, body{
 .link{
     text-decoration: none;
 }
+
+.text-black{
+    color: black !important;
+}

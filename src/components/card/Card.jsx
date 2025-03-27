@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Card.css";
 import { Heart, ShoppingCartIcon } from "lucide-react";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const Card = ({
   type,
@@ -15,6 +16,7 @@ const Card = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLike, setIsLike] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <div
       className="card-container"
@@ -36,8 +38,8 @@ const Card = ({
       </div>
       {type === "category" && (
         <div className="category-content">
-          <h1>{title}</h1>
-          <p>{description}</p>
+          <h1 className={`${isMobile && 'text-black'}`}>{title}</h1>
+          <p className={`${isMobile && 'text-black'}`}>{description}</p>
         </div>
       )}
 
