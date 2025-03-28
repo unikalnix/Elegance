@@ -29,9 +29,10 @@
 
 .dashboard__profile-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
+      align-items: center;
+      justify-content: start;
+      margin-bottom: 15px;
+      gap: 25px;
 }
 
 .dashboard__profile-image {

@@ -1,12 +1,16 @@
+// Imports
 import React, { useState } from 'react'
 import './Hero.css'
 import { ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 
+// Component Function
 const Hero = () => {
+  // Declarations
   const [transform, setTransform] = useState({ x: 0, y: 0 });
   const navigate = useNavigate();
 
+  // Functions
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
     const x = (clientX / window.innerWidth) * 10 - 5;
@@ -14,6 +18,7 @@ const Hero = () => {
     setTransform({ x, y });
   };
 
+  // Return Component
   return (
     <section className='hero-container' onMouseMove={handleMouseMove}>
       <div className='hero-content' style={{ transform: `translate(${transform.x}px, ${transform.y}px)` }}>

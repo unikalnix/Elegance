@@ -1,3 +1,4 @@
+// Imports
 import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import Title from "../../components/title/Title";
@@ -7,7 +8,10 @@ import Card from "../../components/card/Card";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useLocation } from "react-router-dom";
 import NoProductFound from "../../components/no-product-found/NoProductFound";
+
+// Component Function
 const ShopPage = () => {
+  // Declarations
   let sortedCollection = [...collection];
   const itemsPerPage = 12;
   const [sort, setSort] = useState("all");
@@ -21,6 +25,7 @@ const ShopPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const searchQuery = queryParams.get("search") || "";
 
+  // Functions
   const onChangeHandler = (e) => {
     setSort(e.target.value);
   };
@@ -61,6 +66,10 @@ const ShopPage = () => {
     return sortedCollection;
   };
   const totalPages = Math.ceil(getSortedCollection().length / itemsPerPage);
+  const paginatedCollection = getSortedCollection().slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleCategoryChange = (e) => {
     const { value, checked } = e.target;
@@ -78,7 +87,7 @@ const ShopPage = () => {
     setPriceRange([0, value]);
   };
 
-  const handleClearAll = () => {
+  const handleClearAllFilters = () => {
     setSort("all");
     setSelectedCategories([]);
     setIsSaleChecked(false);
@@ -86,6 +95,7 @@ const ShopPage = () => {
     setCurrentPage(1);
   };
 
+  // useEffect Hooks
   const storedCategory = localStorage.getItem("category");
   useEffect(() => {
     if (storedCategory) {
@@ -97,15 +107,12 @@ const ShopPage = () => {
     }
   }, [storedCategory]);
 
-  const paginatedCollection = getSortedCollection().slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
+  // Return Component
   if (sortedCollection.length <= 0) {
     return <NoProductFound />;
   }
 
+  // Return Component
   return (
     <section>
       <Title
@@ -122,7 +129,7 @@ const ShopPage = () => {
         >
           <div className="top-layer">
             <h1>Filters</h1>
-            <h2 onClick={handleClearAll} style={{ cursor: "pointer" }}>
+            <h2 onClick={handleClearAllFilters} style={{ cursor: "pointer" }}>
               Clear all
             </h2>
           </div>

@@ -1,10 +1,15 @@
+// Imports
 import React, { useState } from "react";
 import "./Settings.css";
 import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
-import { Bell, Lock, ShieldCheck, Trash, User } from "lucide-react";
+import { Bell, ShieldCheck, Trash, User } from "lucide-react";
 
+// Component Function
 const Settings = () => {
+  // Declarations
   const [step, setStep] = useState(1);
+
+  // Return Component
   return (
     <div className="settings">
       <Breadcrumb links={["home", "dashboard", "settings"]} />
@@ -126,7 +131,9 @@ const Settings = () => {
             )
           )}
 
-          <button className="settings__button-prefrences">Save Preferences</button>
+          <button className="settings__button-prefrences">
+            Save Preferences
+          </button>
         </div>
       )}
     </div>

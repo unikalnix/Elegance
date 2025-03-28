@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+// Imports
+import React, { useState } from "react";
 import "./AuthModal.css";
 import { X } from "lucide-react";
 
+// Component Function
 const LoginModal = ({ isOpen, toggleAuthModal }) => {
+  // Declarations
   const [fullName, setFullName] = useState("");
   const [userIdentifier, setUserIdentifier] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [confirmUserPassword, setConfirmUserPassword] = useState("");
   const [authMode, setAuthMode] = useState("signup");
 
+  // Functions
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (authMode === "signup") {
@@ -63,6 +67,7 @@ const LoginModal = ({ isOpen, toggleAuthModal }) => {
     }
   };
 
+  // Return Component
   return (
     <>
       {isOpen && <div className="login-overlay"></div>}

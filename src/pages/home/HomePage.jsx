@@ -1,3 +1,4 @@
+// Imports
 import React from "react";
 import "./HomePage.css";
 import Hero from "../../components/hero/Hero";
@@ -7,9 +8,11 @@ import { ArrowRight } from "lucide-react";
 import Title from "../../components/title/Title";
 import useIsMobile from "../../hooks/useIsMobile";
 
+// Component Function
 const HomePage = () => {
   const isMobile = useIsMobile();
-  
+
+  // Return Component
   return (
     <>
       {/* Hero section */}
@@ -85,11 +88,11 @@ const HomePage = () => {
       </section>
       {/* Season sale */}
       <section className="season-sale">
-          <Title
-            title="Season Sale"
-            description="Limited time offers on premium pieces from our collection"
-          />
-            <div className="season-sale--cards">
+        <Title
+          title="Season Sale"
+          description="Limited time offers on premium pieces from our collection"
+        />
+        <div className="season-sale--cards">
           {collection.length > 4 && (
             <h6 className="season-sale--cards--view-all-btn">
               View all Items

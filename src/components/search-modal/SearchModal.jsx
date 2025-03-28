@@ -1,14 +1,18 @@
+// Imports
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 import "./searchModal.css";
 
+// Component Function
 const SearchModal = ({ isOpen, toggleSearchModal }) => {
+  // Declarations
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [searchTerm, setSearchTerm] = useState(queryParams.get("search") || "");
 
+  // Functions
   const handleSearch = () => {
     if (searchTerm.trim()) {
       navigate(`/shop?search=${encodeURIComponent(searchTerm)}`);
@@ -16,6 +20,7 @@ const SearchModal = ({ isOpen, toggleSearchModal }) => {
     }
   };
 
+  // Return Component
   return (
     <div className={`search-container ${isOpen ? "active" : ""}`}>
       <div className="search-overlay"></div>

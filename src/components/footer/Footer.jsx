@@ -1,9 +1,12 @@
+// Imports
 import React from "react";
 import "./Footer.css";
 import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 import { footerLinks } from "../../assets/data";
 
+// Component Function
 const Footer = () => {
+  // Return Component
   return (
     <footer className="footer">
       <div className="f1">
@@ -14,13 +17,13 @@ const Footer = () => {
         </p>
         <div className="f1--social-links">
           <InstagramIcon className="instagram-icon" />
-          <FacebookIcon className="facebook-icon"/>
-          <TwitterIcon  className="twitter-icon"/>
+          <FacebookIcon className="facebook-icon" />
+          <TwitterIcon className="twitter-icon" />
         </div>
       </div>
       {footerLinks.map((item) => {
         return (
-          <div key={item._id} className={`f${Number(item._id)+1}`}>
+          <div key={item._id} className={`f${Number(item._id) + 1}`}>
             <h1>{item.title}</h1>
             <ul>
               {item.links.map((link, index) => (

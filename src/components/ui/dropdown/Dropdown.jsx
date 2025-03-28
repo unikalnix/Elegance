@@ -1,14 +1,22 @@
+// Imports
 import React from "react";
 import "./Dropdown.css";
 import { useNavigate } from "react-router-dom";
 
-const Dropdown = ({ isActive, toggleDropDown }) => {
+// Component Function
+const Dropdown = ({ dropDownRef, toggleDropDown }) => {
+  // Declarations
   const navigate = useNavigate();
+
+  // Return Component
   return (
-    <div className="dropdown">
+    <div ref={dropDownRef} className="dropdown">
       <ul className="dropdown__list">
+        {/* Account Section */}
         <li className="dropdown__item dropdown__item--account">Account</li>
         <hr className="dropdown__divider" />
+
+        {/* Navigation Links */}
         <li
           onClick={() => {
             navigate("/dashboard");
@@ -36,7 +44,10 @@ const Dropdown = ({ isActive, toggleDropDown }) => {
         >
           Wishlist
         </li>
+
         <hr className="dropdown__divider" />
+
+        {/* Settings & Sign Out */}
         <li
           onClick={() => {
             navigate("/dashboard");

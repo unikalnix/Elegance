@@ -1,25 +1,30 @@
+// Imports
 import { useEffect, useState } from "react";
 
+// Hook Function
 const useIsLoggedIn = () => {
+  // Declarations
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!JSON.parse(localStorage.getItem("currentUser"))
   );
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      setIsLoggedIn(!!currentUser);
-    };
+  // Functions
+  const handleStorageChange = () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    setIsLoggedIn(!!currentUser);
+  };
 
-    // Listen for storage updates (cross-tab and same-tab)
+  // useEffect Hook
+  useEffect(() => {
     window.addEventListener("storage", handleStorageChange);
-    
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
+  // Return Hook Value
   return isLoggedIn;
 };
 
+// Export
 export default useIsLoggedIn;

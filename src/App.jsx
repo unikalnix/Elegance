@@ -1,3 +1,4 @@
+// Imports
 import React, { useState } from "react";
 import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/home/HomePage";
@@ -16,20 +17,29 @@ import Contact from "./pages/contact/Contact";
 import About from "./pages/about/About";
 import WishList from "./pages/wishlist/WishList";
 import Settings from "./pages/settings/Settings";
+import ProductDetails from "./pages/product-details/ProductDetails";
 
+// Component Function
 const App = () => {
+  // Declarations
   const [sidebar, setSidebar] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
   const [authModal, setAuthModal] = useState(false);
+
+  // Functions
   const toggleSearchModal = () => {
     setSearchModal((prev) => !prev);
   };
+
   const toggleSidebar = () => {
     setSidebar((prev) => !prev);
   };
+
   const toggleAuthModal = () => {
     setAuthModal((prev) => !prev);
   };
+
+  // Return Component
   return (
     <>
       <Router>
@@ -57,6 +67,7 @@ const App = () => {
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>

@@ -1,5 +1,9 @@
+// Imports
 import React, { useState } from "react";
 import "./OrderDetails.css";
+import { useNavigate } from "react-router-dom";
+import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
+import shirt from "../../assets/images/shirt.jpeg";
 import {
   ArrowLeft,
   BusFront,
@@ -9,22 +13,24 @@ import {
   Printer,
   ShoppingBag,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
 
+// Component Function
 const OrderDetails = () => {
+  // Declarations
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isActive, setIsActive] = useState(false);
-  const orderId = '#10001';
+  const orderId = "#10001";
+
+  // Return Component
   return (
     <div className="order-details">
       {/* Breadcrumb */}
-      <Breadcrumb links= {['home', 'dashboard', 'orders', `Order ${orderId}`]}/>
+      <Breadcrumb links={["home", "dashboard", "orders", `Order ${orderId}`]} />
 
       {/* Header Section */}
       <div className="order-details__header">
-        <h3 onClick={() => navigate('/orders')} className="order-details__back">
+        <h3 onClick={() => navigate("/orders")} className="order-details__back">
           <ArrowLeft size={15} />
           Back to Orders
         </h3>
@@ -99,121 +105,144 @@ const OrderDetails = () => {
         </div>
       </div>
 
-    <div className="order-details__content-wrapper">
+      <div className="order-details__content-wrapper">
         {/* Order Items */}
-      <div className="order-details__items">
-        <h1 className="order-details__items-title">Order Items (2)</h1>
-        <div className="order-details__table-wrapper">
-        <table className="order-details__table">
-          <thead className="order-details__table-head">
-            <tr className="order-details__table-row">
-              <th>Image</th>
-              <th>Product</th>
-              <th>Details</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[...Array(5)].map((_, index) => (
-              <tr key={index} className="order-details__table-row">
-                <td className="order-details__table-cell">
-                  <div className="order-details__image">
-                    <img src="/images/shirt.jpeg" alt="Product" />
-                  </div>
-                </td>
-                <td className="order-details__table-cell">
-                  <h1>Premium Cotton Shirt</h1>
-                </td>
-                <td className="order-details__table-cell">
-                  <div>
-                    <h3>Color: White, Size: M</h3>
-                    <p>Quantity: 1</p>
-                  </div>
-                </td>
-                <td className="order-details__table-cell">$39.99</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </div>
-
-        {/* Shipping & Billing Buttons */}
-        <div className="order-details__info-buttons">
-          <button onClick={() => {setStep(1);setIsActive(true)}} className={`order-details__info-button ${isActive && 'order-details__info-button--active'}`}>
-            Shipping Information
-          </button>
-          <button onClick={() => {setStep(2);setIsActive(false)}} className={`order-details__info-button ${!isActive && 'order-details__info-button--active'}`}>Billing Information</button>
-        </div>
-
-        {/* Shipping Information */}
-        {
-          step === 1 && <div className="order-details__info-section">
-          <h2 className="order-details__info-title">Shipping Information</h2>
-          <div className="order-details__info-content">
-            <h3>John Smith</h3>
-            <p>123 Main St.</p>
-            <p>New York, NY 10001</p>
-            <p>United States</p>
+        <div className="order-details__items">
+          <h1 className="order-details__items-title">Order Items (2)</h1>
+          <div className="order-details__table-wrapper">
+            <table className="order-details__table">
+              <thead className="order-details__table-head">
+                <tr className="order-details__table-row">
+                  <th>Image</th>
+                  <th>Product</th>
+                  <th>Details</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...Array(5)].map((_, index) => (
+                  <tr key={index} className="order-details__table-row">
+                    <td className="order-details__table-cell">
+                      <div className="order-details__image">
+                        <img src={shirt} alt="Product" />
+                      </div>
+                    </td>
+                    <td className="order-details__table-cell">
+                      <h1>Premium Cotton Shirt</h1>
+                    </td>
+                    <td className="order-details__table-cell">
+                      <div>
+                        <h3>Color: White, Size: M</h3>
+                        <p>Quantity: 1</p>
+                      </div>
+                    </td>
+                    <td className="order-details__table-cell">$39.99</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
-        }
 
-        {/* Billing Information */}
-       {
-        step === 2 &&  <div className="order-details__info-section">
-        <h2 className="order-details__info-title">Billing Information</h2>
-        <div className="order-details__info-content">
-          <h3>John Smith</h3>
-          <p>123 Main St.</p>
-          <p>New York, NY 10001</p>
-          <p>United States</p>
+          {/* Shipping & Billing Buttons */}
+          <div className="order-details__info-buttons">
+            <button
+              onClick={() => {
+                setStep(1);
+                setIsActive(true);
+              }}
+              className={`order-details__info-button ${
+                isActive && "order-details__info-button--active"
+              }`}
+            >
+              Shipping Information
+            </button>
+            <button
+              onClick={() => {
+                setStep(2);
+                setIsActive(false);
+              }}
+              className={`order-details__info-button ${
+                !isActive && "order-details__info-button--active"
+              }`}
+            >
+              Billing Information
+            </button>
+          </div>
+
+          {/* Shipping Information */}
+          {step === 1 && (
+            <div className="order-details__info-section">
+              <h2 className="order-details__info-title">
+                Shipping Information
+              </h2>
+              <div className="order-details__info-content">
+                <h3>John Smith</h3>
+                <p>123 Main St.</p>
+                <p>New York, NY 10001</p>
+                <p>United States</p>
+              </div>
+            </div>
+          )}
+
+          {/* Billing Information */}
+          {step === 2 && (
+            <div className="order-details__info-section">
+              <h2 className="order-details__info-title">Billing Information</h2>
+              <div className="order-details__info-content">
+                <h3>John Smith</h3>
+                <p>123 Main St.</p>
+                <p>New York, NY 10001</p>
+                <p>United States</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Order Summary */}
+        <div className="order-details__summary">
+          <div className="order-details__summary-box">
+            <h1 className="order-details__summary-title">Order Summary</h1>
+            <div className="order-details__summary-item">
+              <h3>Subtotal</h3>
+              <p>$89.99</p>
+            </div>
+            <div className="order-details__summary-item">
+              <h3>Shipping</h3>
+              <p>$5.00</p>
+            </div>
+            <div className="order-details__summary-item">
+              <h3>Tax</h3>
+              <p>$5.00</p>
+            </div>
+            <hr />
+            <div className="order-details__summary-total">
+              <h3>Total</h3>
+              <p>$99.99</p>
+            </div>
+          </div>
+
+          {/* Payment Information */}
+          <div className="order-details__payment">
+            <h1>Payment Information</h1>
+            <p>Credit Card (**** **** **** 4321)</p>
+          </div>
+
+          {/* Help Section */}
+          <div className="order-details__help">
+            <h1>Need help?</h1>
+            <p>
+              If you have any questions or concerns about your order, our
+              customer service team is here to help.
+            </p>
+            <button
+              onClick={() => navigate("/contact")}
+              className="order-details__button--support"
+            >
+              Contact Support
+            </button>
+          </div>
         </div>
       </div>
-       }
-      </div>
-
-      {/* Order Summary */}
-      <div className="order-details__summary">
-        <div className="order-details__summary-box">
-          <h1 className="order-details__summary-title">Order Summary</h1>
-          <div className="order-details__summary-item">
-            <h3>Subtotal</h3>
-            <p>$89.99</p>
-          </div>
-          <div className="order-details__summary-item">
-            <h3>Shipping</h3>
-            <p>$5.00</p>
-          </div>
-          <div className="order-details__summary-item">
-            <h3>Tax</h3>
-            <p>$5.00</p>
-          </div>
-          <hr />
-          <div className="order-details__summary-total">
-            <h3>Total</h3>
-            <p>$99.99</p>
-          </div>
-        </div>
-
-        {/* Payment Information */}
-        <div className="order-details__payment">
-          <h1>Payment Information</h1>
-          <p>Credit Card (**** **** **** 4321)</p>
-        </div>
-
-        {/* Help Section */}
-        <div className="order-details__help">
-          <h1>Need help?</h1>
-          <p>
-            If you have any questions or concerns about your order, our customer
-            service team is here to help.
-          </p>
-          <button onClick={() => navigate('/contact')} className="order-details__button--support">
-            Contact Support
-          </button>
-        </div>
-      </div>
-    </div>
     </div>
   );
 };

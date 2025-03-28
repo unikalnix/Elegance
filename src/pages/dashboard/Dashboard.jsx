@@ -1,16 +1,20 @@
+// Imports
 import { Heart, LogOut, Settings, ShoppingBag, User } from "lucide-react";
 import "./Dashboard.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import shirt from "../../assets/images/shirt.jpeg";
 
+// Component Function
 const Dashboard = () => {
-  // User information state
+  // Declarations
   const [firstName, setFirstName] = useState("John");
   const [lastName, setLastName] = useState("Smith");
   const [email, setEmail] = useState("john.smith@example.com");
   const [phone, setPhone] = useState("+1 234 567 8900");
   const navigate = useNavigate();
 
+  // Functions
   const handleLogout = () => {
     alert("You are logged out");
   };
@@ -29,6 +33,7 @@ const Dashboard = () => {
     alert("Your changes are saved");
   };
 
+  // Return Component
   return (
     <div className="dashboard">
       <h1 className="dashboard__title">My Dashboard</h1>
@@ -38,7 +43,7 @@ const Dashboard = () => {
         <div className="dashboard__profile">
           <div className="dashboard__profile-header">
             <div className="dashboard__profile-image">
-              <img src="/images/sweater.jpeg" alt="User" />
+              <img src={shirt} alt="User" />
             </div>
             <div>
               <h1 className="dashboard__profile-name">
