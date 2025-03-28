@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import Navbar from "./components/navbar/Navbar";
-import HomePage from "./pages/home-page/HomePage";
+import HomePage from "./pages/home/HomePage";
 import Footer from "./components/footer/Footer";
 import Sidebar from "./components/sidebar/Sidebar";
 import SearchModal from "./components/search-modal/SearchModal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ShopPage from "./pages/shop-page/ShopPage";
-import NotFound from "./pages/not-found-page/NotFound";
+import ShopPage from "./pages/shop/ShopPage";
+import NotFound from "./pages/not-found/NotFound";
 import AuthModal from "./components/auth-modal/AuthModal";
-import Checkout from "./pages/checkout-page/Checkout";
-import Orders from "./pages/orders-page/Orders";
+import Checkout from "./pages/checkout/Checkout";
+import Orders from "./pages/orders/Orders";
 import Dashboard from "./pages/dashboard/Dashboard";
 import OrderDetails from "./pages/order-details/OrderDetails";
-import Contact from "./pages/contact-page/Contact";
-import About from "./pages/about-page/About";
-import Dropdown from "./components/ui/dropdown/Dropdown";
-import WishList from "./pages/wishlist-page/WishList";
+import Contact from "./pages/contact/Contact";
+import About from "./pages/about/About";
+import WishList from "./pages/wishlist/WishList";
+import Settings from "./pages/settings/Settings";
 
 const App = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -40,8 +40,8 @@ const App = () => {
         />
         <AuthModal isOpen={authModal} toggleAuthModal={toggleAuthModal} />
         <Navbar
-        authModal={authModal}
-        toggleAuthModal={toggleAuthModal}
+          authModal={authModal}
+          toggleAuthModal={toggleAuthModal}
           sidebar={sidebar}
           toggleSidebar={toggleSidebar}
           searchModal={searchModal}
@@ -55,6 +55,7 @@ const App = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/wishlist" element={<WishList />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />

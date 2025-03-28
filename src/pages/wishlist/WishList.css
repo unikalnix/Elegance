@@ -118,3 +118,28 @@
     background-color: #F3F4F6;
 }
 
+@media only screen and (min-width:320px) and (max-width:1024px){
+    .wishlist{
+        width: 95%;
+    }
+
+    .wishlist__item-image{
+        width: 80px;
+        height: 65px;
+    }
+
+    .wishlist__item-status {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .wishlist__item-btn--add {
+        width: 100px;
+        height: 35px;
+        font-size: 11px;}
+
+        .wishlist__item-title, .wishlist__item-price{
+            font-size: 12px;
+        }
+}
+

@@ -2,9 +2,11 @@ import React from "react";
 import "./WishList.css";
 import { ShoppingCart, Trash } from "lucide-react";
 import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const WishList = () => {
   const inStock = false;
+  const isMobile = useIsMobile();
   return (
     <div className="wishlist">
       {/* Header Section */}
@@ -46,7 +48,9 @@ const WishList = () => {
                 cursor: inStock ? 'pointer' :'auto'
               }}
               className="wishlist__item-btn--add">
-                <ShoppingCart className="wishlist__item-icon" />
+                <ShoppingCart
+                size={isMobile ? 15 : 20}
+                className="wishlist__item-icon" />
                 Add to Cart
               </button>
               <button className="wishlist__item-btn--delete">

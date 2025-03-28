@@ -266,3 +266,24 @@
 .dashboard__view-all {
   text-decoration: underline;
 }
+
+@media only screen and (min-width:320px) and (max-width:1024px){
+  .dashboard__container{
+    flex-direction: column;
+  }
+
+  .dashboard__profile{
+    position: static;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .dashboard__form-group{
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .dashboard__info{
+    width: 100%;
+  }
+}

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './Hero.css'
 import { ArrowRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const [transform, setTransform] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
@@ -18,7 +20,7 @@ const Hero = () => {
         <h1>Redefine your <span>style</span></h1>
         <p>Discover our new collection that combines timeless elegance with contemporary design. Crafted for those who appreciate quality and style.</p>
         <div className="header-btns">
-          <button className='btn'>Shop Now<ArrowRight className='left-arrow' /></button>
+          <button onClick={() => navigate('/shop')} className='btn'>Shop Now<ArrowRight className='left-arrow' /></button>
           <button className='btn'>Explore Collection</button>
         </div>
       </div>

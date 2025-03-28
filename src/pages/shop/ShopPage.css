@@ -183,7 +183,6 @@
     .shop-container{
         flex-direction: column;
     }
-
     
     .filters, .shop-main{
         width: 100%;
@@ -193,5 +192,10 @@
     }
     .shop-main{
         padding: 30px;
+    }
+
+    .shop-main .top-layer select{
+        width: 120px;
+        margin-right: 10px;
     }
 }
