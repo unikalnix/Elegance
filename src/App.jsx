@@ -14,6 +14,8 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import OrderDetails from "./pages/order-details/OrderDetails";
 import Contact from "./pages/contact-page/Contact";
 import About from "./pages/about-page/About";
+import Dropdown from "./components/ui/dropdown/Dropdown";
+import WishList from "./pages/wishlist-page/WishList";
 
 const App = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -52,6 +54,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/wishlist" element={<WishList />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />

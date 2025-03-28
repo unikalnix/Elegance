@@ -5,6 +5,7 @@ import { Search, ShoppingCart, User, Menu, LogIn } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link } from "react-router-dom";
 import useIsLogin from "../../hooks/useIsLogin";
+import Dropdown from "../ui/dropdown/Dropdown";
 
 const Navbar = ({
   sidebar,
@@ -15,6 +16,7 @@ const Navbar = ({
   toggleAuthModal,
 }) => {
   const [scroll, setScroll] = useState(0);
+  const [showDropDown, setShowDropDown] = useState(false);
   const isMobile = useIsMobile();
   const isLoggedIn = useIsLogin();
 
@@ -81,14 +83,19 @@ const Navbar = ({
           })}
         </ul>
         <div className="navbar-right">
-          <Search onClick={toggleSearchModal} />
-          {!isLoggedIn && <LogIn onClick={toggleAuthModal} />}
+          <Search size={20} onClick={toggleSearchModal} />
+          {!isLoggedIn && <LogIn size={20} onClick={toggleAuthModal} />}
           {isLoggedIn && (
             <>
-              <User />
+              <div className="user-dropdown-wrapper">
+                <User size={20} onClick={() => setShowDropDown((prev => !prev))} />
+                  {
+                    showDropDown && <Dropdown isActive={showDropDown} toggleDropDown={() => setShowDropDown(prev => !prev)}/>
+                  }
+              </div>
               <div className="cart">
                 <Link className="link text-black" to="/checkout">
-                  <ShoppingCart />
+                  <ShoppingCart size={20} />
                 </Link>
                 <span>10</span>
               </div>
