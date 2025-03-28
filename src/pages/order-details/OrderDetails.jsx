@@ -10,22 +10,17 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
 
 const OrderDetails = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isActive, setIsActive] = useState(false);
+  const orderId = '#10001';
   return (
     <div className="order-details">
       {/* Breadcrumb */}
-      <div className="order-details__breadcrumb">
-        <span onClick={() => navigate('/')} className="order-details__breadcrumb-item">Home /</span>
-        <span onClick={() => navigate('/dashboard')} className="order-details__breadcrumb-item">Dashboard /</span>
-        <span onClick={() => navigate('/orders')} className="order-details__breadcrumb-item">Orders /</span>
-        <span className="order-details__breadcrumb-item order-details__breadcrumb-item--active">
-          Order #10001
-        </span>
-      </div>
+      <Breadcrumb links= {['home', 'dashboard', 'orders', `Order ${orderId}`]}/>
 
       {/* Header Section */}
       <div className="order-details__header">

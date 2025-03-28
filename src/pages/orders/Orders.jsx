@@ -2,17 +2,13 @@ import React from "react";
 import "./Orders.css";
 import { ChevronRight, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
 const Orders = () => {
   const navigate = useNavigate();
   return (
     <div className="orders">
       <h1 className="orders__title">My Orders</h1>
-      <p className="orders__breadcrumb">
-        <span onClick={() => navigate("/")}>Home</span> /{" "}
-        <span onClick={() => navigate("/dashboard")}>Dashboard</span> /{" "}
-        <span>Orders</span>
-      </p>
-
+      <Breadcrumb links={['home', 'dashboard', 'orders']}/>
     <div className="orders__table-container">
     <table className="orders__table">
         <thead className="orders__table-head">

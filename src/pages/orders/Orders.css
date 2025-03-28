@@ -11,27 +11,6 @@
   margin: 20px 0;
 }
 
-.orders__breadcrumb {
-  color: rgb(75, 85, 99);
-  font-weight: 400;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-.orders__breadcrumb span {
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.orders__breadcrumb span:hover {
-  color: black;
-}
-
-.orders__breadcrumb span:last-child {
-  color: black;
-  cursor: auto;
-}
-
 .orders__table-container{
   min-width: 320px;
   overflow: auto;
