@@ -18,6 +18,7 @@ import About from "./pages/about/About";
 import WishList from "./pages/wishlist/WishList";
 import Settings from "./pages/settings/Settings";
 import ProductDetails from "./pages/product-details/ProductDetails";
+import Cart from "./pages/cart/Cart";
 
 // Component Function
 const App = () => {
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="/order-details/:id" element={<OrderDetails />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />

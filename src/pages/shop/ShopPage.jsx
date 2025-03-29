@@ -202,7 +202,9 @@ const ShopPage = () => {
             {paginatedCollection.map((item) => {
               return (
                 <Card
+
                   key={item._id}
+                  _id={item._id}
                   type={item.type}
                   title={item.title}
                   price={item.price}

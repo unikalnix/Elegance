@@ -36,6 +36,7 @@ const HomePage = () => {
           {homeCategoriesData.slice(0, 4).map((item) => (
             <Card
               key={item._id}
+              _id={item._id}
               type={item.type}
               image={item.image}
               title={item.title}
@@ -63,6 +64,7 @@ const HomePage = () => {
           {collection.slice(0, 4).map((item) => {
             return (
               <Card
+              _id={item._id}
                 key={item._id}
                 type={item.type}
                 image={item.image}
@@ -105,6 +107,7 @@ const HomePage = () => {
           {collection.slice(0, 4).map((item) => {
             return (
               <Card
+              _id={item._id}
                 key={item._id}
                 type={item.type}
                 image={item.image}

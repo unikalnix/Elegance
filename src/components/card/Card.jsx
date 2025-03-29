@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import "./Card.css";
 import { Heart, ShoppingCartIcon } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
+import { useNavigate } from "react-router-dom";
 
 // Component Function
 const Card = ({
+  _id,
   type,
   image,
   title,
@@ -20,11 +22,13 @@ const Card = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isLike, setIsLike] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Return Component
   return (
     <div
       className="card-container"
+      onClick={type === 'sale' ? () => navigate(`/product-details/${_id}`) : undefined}
       style={{
         height: type === "category" ? "300px" : "375px",
         transform: isHovered
