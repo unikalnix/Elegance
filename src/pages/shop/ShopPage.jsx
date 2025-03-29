@@ -1,5 +1,5 @@
 // Imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ShopPage.css";
 import Title from "../../components/title/Title";
 import { Filter, MoveLeftIcon, MoveRightIcon } from "lucide-react";
@@ -95,21 +95,9 @@ const ShopPage = () => {
     setCurrentPage(1);
   };
 
-  // useEffect Hooks
-  const storedCategory = localStorage.getItem("category");
-  useEffect(() => {
-    if (storedCategory) {
-      if (storedCategory === "sale") {
-        setIsSaleChecked(true);
-      } else {
-        setSelectedCategories((prev) => [...prev, storedCategory]);
-      }
-    }
-  }, [storedCategory]);
-
   // Return Component
   if (sortedCollection.length <= 0) {
-    return <NoProductFound />;
+    return <NoProductFound handleClearAllFilters={handleClearAllFilters} />;
   }
 
   // Return Component
@@ -202,7 +190,6 @@ const ShopPage = () => {
             {paginatedCollection.map((item) => {
               return (
                 <Card
-
                   key={item._id}
                   _id={item._id}
                   type={item.type}

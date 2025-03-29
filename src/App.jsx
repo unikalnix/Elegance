@@ -1,11 +1,11 @@
 // Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/home/HomePage";
 import Footer from "./components/footer/Footer";
 import Sidebar from "./components/sidebar/Sidebar";
 import SearchModal from "./components/search-modal/SearchModal";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ShopPage from "./pages/shop/ShopPage";
 import NotFound from "./pages/not-found/NotFound";
 import AuthModal from "./components/auth-modal/AuthModal";
@@ -19,13 +19,24 @@ import WishList from "./pages/wishlist/WishList";
 import Settings from "./pages/settings/Settings";
 import ProductDetails from "./pages/product-details/ProductDetails";
 import Cart from "./pages/cart/Cart";
+import useScrollToTop from "./hooks/useScrollToTop";
+import Loader from "./components/loader/Loader";
 
 // Component Function
 const App = () => {
+  useScrollToTop();
   // Declarations
   const [sidebar, setSidebar] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
   const [authModal, setAuthModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust time as needed
+  }, []);
 
   // Functions
   const toggleSearchModal = () => {
@@ -39,42 +50,38 @@ const App = () => {
   const toggleAuthModal = () => {
     setAuthModal((prev) => !prev);
   };
-
   // Return Component
-  return (
+  return loading ? (
+    <Loader /> 
+  ) : (
     <>
-      <Router>
-        <Sidebar isOpen={sidebar} toggleSidebar={toggleSidebar} />
-        <SearchModal
-          isOpen={searchModal}
-          toggleSearchModal={toggleSearchModal}
-        />
-        <AuthModal isOpen={authModal} toggleAuthModal={toggleAuthModal} />
-        <Navbar
-          authModal={authModal}
-          toggleAuthModal={toggleAuthModal}
-          sidebar={sidebar}
-          toggleSidebar={toggleSidebar}
-          searchModal={searchModal}
-          toggleSearchModal={toggleSearchModal}
-        />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/wishlist" element={<WishList />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/order-details/:id" element={<OrderDetails />} />
-          <Route path="/product-details/:id" element={<ProductDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-      </Router>
+      <Sidebar isOpen={sidebar} toggleSidebar={toggleSidebar} />
+      <SearchModal isOpen={searchModal} toggleSearchModal={toggleSearchModal} />
+      <AuthModal isOpen={authModal} toggleAuthModal={toggleAuthModal} />
+      <Navbar
+        authModal={authModal}
+        toggleAuthModal={toggleAuthModal}
+        sidebar={sidebar}
+        toggleSidebar={toggleSidebar}
+        searchModal={searchModal}
+        toggleSearchModal={toggleSearchModal}
+      />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/wishlist" element={<WishList />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/order-details/:id" element={<OrderDetails />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+      <Footer />
     </>
   );
 };

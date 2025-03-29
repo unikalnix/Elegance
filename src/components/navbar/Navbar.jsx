@@ -70,24 +70,9 @@ const Navbar = ({
           {navItems.map((navItem, index) => {
             return (
               <Link
-                onClick={() => {
-                  let category = categories.filter(
-                    (category) => category === navItem
-                  );
-                  let isFound = category.toString() !== "" ? true : false;
-                  if (isFound) {
-                    localStorage.setItem("category", category);
-                  }
-                }}
                 key={index}
                 className="link"
-                to={
-                  navItem === "about"
-                    ? "/about"
-                    : navItem === "contact"
-                    ? "/contact"
-                    : "/shop"
-                }
+                to={'/shop'}
               >
                 <li
                   style={{
@@ -117,7 +102,7 @@ const Navbar = ({
                   />
                 )}
               </div>
-              <div className="cart">
+              <div className="cart-icon">
                 <Link className="link text-black" to="/checkout">
                   <ShoppingCart size={20} />
                 </Link>

@@ -1,9 +1,10 @@
 // Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Card.css";
 import { Heart, ShoppingCartIcon } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useNavigate } from "react-router-dom";
+import useToast from "../../context/ToastContext";
 
 // Component Function
 const Card = ({
@@ -23,12 +24,15 @@ const Card = ({
   const [isLike, setIsLike] = useState(false);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const showToast = useToast();
 
   // Return Component
   return (
     <div
       className="card-container"
-      onClick={type === 'sale' ? () => navigate(`/product-details/${_id}`) : undefined}
+      onClick={
+        type === "sale" ? () => navigate(`/product-details/${_id}`) : undefined
+      }
       style={{
         height: type === "category" ? "300px" : "375px",
         transform: isHovered
@@ -72,12 +76,15 @@ const Card = ({
       {type === "sale" && (
         <div className="card-icons">
           <Heart
-            onClick={() => setIsLike((prev) => !prev)}
+            onClick={(e) => {e.stopPropagation();setIsLike((prev) => !prev)}}
             size={40}
             fill={isLike ? "red" : "#00000000"}
             stroke={isLike ? "red" : "black"}
           />
-          <ShoppingCartIcon size={40} />
+          <ShoppingCartIcon
+            onClick={(e) => {e.stopPropagation();showToast("info", "Item added to cart");}}
+            size={40}
+          />
         </div>
       )}
     </div>
