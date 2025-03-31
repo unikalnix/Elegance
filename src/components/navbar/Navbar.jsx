@@ -1,7 +1,7 @@
 // Import Statements
 import React, { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
-import { navItems, categories } from "../../assets/data";
+import { navItems } from "../../assets/data";
 import { Search, ShoppingCart, User, Menu, LogIn } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link } from "react-router-dom";
@@ -84,6 +84,9 @@ const Navbar = ({
           })}
         </ul>
         <div className="navbar-right">
+          <Link className="link" to="/admin">
+            <button className="admin-nav-button">Admin</button>
+          </Link>
           <Search size={20} onClick={toggleSearchModal} />
           {!isLoggedIn && <LogIn size={20} onClick={toggleAuthModal} />}
           {isLoggedIn && (

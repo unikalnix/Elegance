@@ -1,23 +1,13 @@
 // Imports
 import React from "react";
 import "./NoProductFound.css"; // Importing CSS file
-import { ChevronLeft, ShoppingBag } from "lucide-react";
-import useScrollToTop from "../../hooks/useScrollToTop";
+import { ShoppingBag } from "lucide-react";
 
 // Component Function
 const NoProductFound = ({handleClearAllFilters}) => {
-  useScrollToTop();
-
   // Return Component
   return (
     <div className="no-products">
-      <div className="no-products__back">
-        <button onClick={handleClearAllFilters} className="no-products__back-button">
-          <ChevronLeft size={18} />
-          <span>Back to Shop</span>
-        </button>
-      </div>
-
       <div className="no-products__content">
         <div className="no-products__icon">
           <ShoppingBag size={48} strokeWidth={1.5} />
@@ -51,7 +41,7 @@ const NoProductFound = ({handleClearAllFilters}) => {
           </ul>
         </div>
 
-        <button onClick={handleClearAllFilters} className="no-products__button">Browse All Products</button>
+        <button onClick={handleClearAllFilters} className="no-products__button">Reset Filters</button>
       </div>
     </div>
   )

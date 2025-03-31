@@ -98,11 +98,6 @@ const ShopPage = () => {
   };
 
   // Return Component
-  if (sortedCollection.length <= 0) {
-    return <NoProductFound handleClearAllFilters={handleClearAllFilters} />;
-  }
-
-  // Return Component
   return (
     <section>
       <Title
@@ -177,63 +172,73 @@ const ShopPage = () => {
           </div>
         </aside>
         <main className="shop-main">
-          <div className="top-layer">
-            <h1>Showing {getSortedCollection().length} products</h1>
-            <select defaultValue={sort} onChange={onChangeHandler}>
-              <option value="all">All</option>
-              <option value="featured">Featured</option>
-              <option value="newest arrivals">Newest Arrivals</option>
-              <option value="low to high">Low to High</option>
-              <option value="high to low">High to Low</option>
-            </select>
-            {/* Sort and filter */}
-            {isMobile && (
-              <div className="sort-and-filter">
-                <Filter
-                  onClick={() => setFilterBar((prev) => !prev)}
-                  stroke="rgb(116, 103, 117)"
-                />
+          {getSortedCollection().length > 0 ? (
+            <>
+              <div className="top-layer">
+                <h1>Showing {getSortedCollection().length} products</h1>
+                <select defaultValue={sort} onChange={onChangeHandler}>
+                  <option value="all">All</option>
+                  <option value="featured">Featured</option>
+                  <option value="newest arrivals">Newest Arrivals</option>
+                  <option value="low to high">Low to High</option>
+                  <option value="high to low">High to Low</option>
+                </select>
+                {/* Sort and filter */}
+                {isMobile && (
+                  <div className="sort-and-filter">
+                    <Filter
+                      onClick={() => setFilterBar((prev) => !prev)}
+                      stroke="rgb(116, 103, 117)"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <div className="middle-layer">
-            {paginatedCollection.map((item) => {
-              return (
-                <Card
-                  key={item._id}
-                  _id={item._id}
-                  type={item.type}
-                  title={item.title}
-                  price={item.price}
-                  isNew={item.isOnSale ? undefined : item.isNew}
-                  isOnSale={item.isOnSale}
-                  image={item.image}
-                  discountPercentage={
-                    item.isOnSale ? item.discountPercentage : undefined
+              <div className="middle-layer">
+                {paginatedCollection.map((item) => {
+                  return (
+                    <Card
+                      key={item._id}
+                      _id={item._id}
+                      type={item.type}
+                      title={item.title}
+                      price={item.price}
+                      isNew={item.isOnSale ? undefined : item.isNew}
+                      isOnSale={item.isOnSale}
+                      image={item.image}
+                      discountPercentage={
+                        item.isOnSale ? item.discountPercentage : undefined
+                      }
+                      originalPrice={
+                        item.isOnSale ? item.originalPrice : undefined
+                      }
+                      inStock={item.inStock}
+                    />
+                  );
+                })}
+              </div>
+              <div className="bottom-layer">
+                <div
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
-                  originalPrice={item.isOnSale ? item.originalPrice : undefined}
-                  inStock={item.inStock}
-                />
-              );
-            })}
-          </div>
-          <div className="bottom-layer">
-            <div
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            >
-              <MoveLeftIcon size={15} />
-            </div>
-            <div>
-              {currentPage} of {totalPages}
-            </div>
-            <div
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-            >
-              <MoveRightIcon size={15} />
-            </div>
-          </div>
+                >
+                  <MoveLeftIcon size={15} />
+                </div>
+                <div>
+                  {currentPage} of {totalPages}
+                </div>
+                <div
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                >
+                  <MoveRightIcon size={15} />
+                </div>
+              </div>
+            </>
+          ) : (
+            <NoProductFound handleClearAllFilters={handleClearAllFilters} />
+          )}
         </main>
       </div>
     </section>

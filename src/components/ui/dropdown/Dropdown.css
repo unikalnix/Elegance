@@ -40,6 +40,7 @@
     border-radius: 10px;
     position: relative;
     margin: 4px 0;
+    cursor: pointer;
 }
 
 .dropdown__item span{

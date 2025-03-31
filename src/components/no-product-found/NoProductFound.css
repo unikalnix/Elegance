@@ -1,34 +1,3 @@
-/* No Products Found Page Styles */
-.no-products {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: "Inter", sans-serif;
-}
-
-.no-products__back {
-  margin-bottom: 2rem;
-}
-
-.no-products__back-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  font-family: "Inter", sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #000;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.2s;
-}
-
-.no-products__back-button:hover {
-  color: #666;
-}
-
 .no-products__content {
   display: flex;
   flex-direction: column;
