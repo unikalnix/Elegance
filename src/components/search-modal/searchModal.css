@@ -95,3 +95,13 @@
   padding: 5px 10px;
   border-radius: 20px;
 }
+
+
+@media only screen and (max-width:500px){
+  .search-modal{
+    width: 300px;
+  }
+  .search-modal .middle-layer input{
+    width: 170px;
+  }
+}
