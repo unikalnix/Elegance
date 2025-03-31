@@ -82,6 +82,15 @@
   font-weight: 500;
   font-size: 16px;
   color: rgb(107, 114, 128);
+  position: relative;
+}
+
+.dashboard__menu-item span{
+  position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    color: rgb(107, 114, 128);
 }
 
 .dashboard__menu-item--active {

@@ -12,6 +12,8 @@ import {
   ShoppingCart,
   Ticket,
 } from "lucide-react";
+import { useCart } from "../../context/CartContext";
+import { useToast } from "../../context/ToastContext";
 
 // Component Function
 const ProductDetails = () => {
@@ -23,12 +25,22 @@ const ProductDetails = () => {
   const [image, setImage] = useState(null);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
+  const { addToCart, addToWishList, removeFromWishList, wishListData } = useCart();
+  const [isLike, setIsLike] = useState(!!wishListData.find(item => item._id === id));
   const [quantity, setQuantity] = useState(1);
-  const [isLike, setIsLike] = useState(false);
+  const { showToast } = useToast();
 
   // Functions
   const handleAddToCart = () => {
-    alert("Item added to cart");
+    const dataAddToCart = {
+      _id: id,
+      image,
+      colors,
+      sizes,
+      quantity,
+    };
+    addToCart(dataAddToCart);
+    showToast("success", "Added to cart");
   };
 
   // useEffect Hooks
@@ -41,6 +53,10 @@ const ProductDetails = () => {
       setSizes([selectedData.size[0]]);
     }
   }, [id]);
+
+  useEffect(() =>{
+console.log(isLike)
+  }, [])
 
   if (!data) {
     return <h1>No Data Found</h1>;
@@ -186,6 +202,13 @@ const ProductDetails = () => {
                 </div>
               ))}
             </div>
+            <p
+              style={{
+                color: data.inStock ? "#28a745" : "#dc3545",
+              }}
+            >
+              {data.inStock ? "In Stock" : "Out of Stock"}
+            </p>
           </div>
 
           {/* Quantity & Actions */}
@@ -216,7 +239,12 @@ const ProductDetails = () => {
 
             <div className="product-details__wishlist-share">
               <div
-                onClick={() => setIsLike((prev) => !prev)}
+                onClick={() => {
+                  setIsLike((prev) => !prev);
+                  !isLike
+                    ? addToWishList({ _id:data._id, image:data.image, title:data.title, price:data.price, inStock:data.inStock })
+                    : removeFromWishList(data._id);
+                }}
                 className="product-details__wishlist"
               >
                 <Heart

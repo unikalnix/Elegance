@@ -8,9 +8,11 @@ import Card from "../../components/card/Card";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useLocation } from "react-router-dom";
 import NoProductFound from "../../components/no-product-found/NoProductFound";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 // Component Function
 const ShopPage = () => {
+  useScrollToTop();
   // Declarations
   let sortedCollection = [...collection];
   const itemsPerPage = 12;
@@ -127,27 +129,35 @@ const ShopPage = () => {
               {categories.map((category, index) => {
                 return (
                   <div key={index} className="filters-checkbox-field">
-                    <input
-                      type="checkbox"
-                      name={category}
-                      value={category}
-                      checked={selectedCategories.includes(category)}
-                      onChange={handleCategoryChange}
-                    />
-                    <label htmlFor={category}>{category}</label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="input"
+                        name={category}
+                        value={category}
+                        checked={selectedCategories.includes(category)}
+                        onChange={handleCategoryChange}
+                      />
+                      <span className="custom-checkbox"></span>
+                      {category}
+                    </label>
                   </div>
                 );
               })}
             </div>
             <div className="filters-salecheckbox-field">
-              <input
-                type="checkbox"
-                name="sale"
-                value="sale"
-                checked={isSaleChecked}
-                onChange={handleSaleChange}
-              />
-              <label htmlFor="sale">Sale</label>
+              <label>
+                <input
+                  type="checkbox"
+                  className="input"
+                  name="sale"
+                  value="sale"
+                  checked={isSaleChecked}
+                  onChange={handleSaleChange}
+                />
+                <span className="custom-checkbox"></span>
+                Sale
+              </label>
             </div>
           </div>
           <hr />
@@ -202,6 +212,7 @@ const ShopPage = () => {
                     item.isOnSale ? item.discountPercentage : undefined
                   }
                   originalPrice={item.isOnSale ? item.originalPrice : undefined}
+                  inStock={item.inStock}
                 />
               );
             })}

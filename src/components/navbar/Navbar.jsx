@@ -7,6 +7,7 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { Link } from "react-router-dom";
 import useIsLogin from "../../hooks/useIsLogin";
 import Dropdown from "../ui/dropdown/Dropdown";
+import { useCart } from "../../context/CartContext";
 
 // Component Function
 const Navbar = ({
@@ -23,6 +24,7 @@ const Navbar = ({
   const dropDownRef = useRef(null);
   const isMobile = useIsMobile();
   const isLoggedIn = useIsLogin();
+  const { cartData } = useCart();
 
   // Functions
   const handleScroll = () => {
@@ -69,11 +71,7 @@ const Navbar = ({
         <ul>
           {navItems.map((navItem, index) => {
             return (
-              <Link
-                key={index}
-                className="link"
-                to={'/shop'}
-              >
+              <Link key={index} className="link" to={"/shop"}>
                 <li
                   style={{
                     color: navItem === "sale" && "rgb(220, 38, 38)",
@@ -103,10 +101,10 @@ const Navbar = ({
                 )}
               </div>
               <div className="cart-icon">
-                <Link className="link text-black" to="/checkout">
+                <Link className="link text-black" to="/cart">
                   <ShoppingCart size={20} />
                 </Link>
-                <span>10</span>
+                <span>{cartData.length}</span>
               </div>
             </>
           )}

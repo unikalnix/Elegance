@@ -2,11 +2,13 @@
 import React from "react";
 import "./Dropdown.css";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 
 // Component Function
 const Dropdown = ({ dropDownRef, toggleDropDown }) => {
   // Declarations
   const navigate = useNavigate();
+  const {wishListData} = useCart();
 
   // Return Component
   return (
@@ -42,7 +44,7 @@ const Dropdown = ({ dropDownRef, toggleDropDown }) => {
           }}
           className="dropdown__item"
         >
-          Wishlist
+          Wishlist <span>{wishListData.length}</span>
         </li>
 
         <hr className="dropdown__divider" />

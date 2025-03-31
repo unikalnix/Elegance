@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import shirt from "../../assets/images/shirt.jpeg";
+import { useCart } from "../../context/CartContext";
 
 // Component Function
 const Dashboard = () => {
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [email, setEmail] = useState("john.smith@example.com");
   const [phone, setPhone] = useState("+1 234 567 8900");
   const navigate = useNavigate();
+  const {wishListData} = useCart();
 
   // Functions
   const handleLogout = () => {
@@ -67,7 +69,7 @@ const Dashboard = () => {
               onClick={() => navigate("/wishlist")}
               className="dashboard__menu-item"
             >
-              <Heart /> Wishlist
+              <Heart /> Wishlist <span>{wishListData.length}</span>
             </li>
             <li
               onClick={() => navigate("/settings")}

@@ -5,24 +5,28 @@ import Toast from "../components/toast/Toast";
 const ToastContext = createContext();
 
 export const ToastProvider = ({ children }) => {
-    const [toast, setToast] = useState({ visible: false, type: "", message: "" });
+  const [toast, setToast] = useState({ visible: false, type: "", message: "" });
 
-    const showToast = (type, message) => {
-        setToast({ visible: true, type, message });
+  const showToast = (type, message) => {
+    setToast({ visible: true, type, message });
 
-        setTimeout(() => {
-            setToast({ visible: false, type: "", message: "" });
-        }, 3000);
-    };
+    setTimeout(() => {
+      setToast({ visible: false, type: "", message: "" });
+    }, 3000);
+  };
 
-    return (
-        <ToastContext.Provider value={showToast}>
-            {children}
-            {toast.visible && <Toast visible={toast.visible} type={toast.type} message={toast.message} />}
-        </ToastContext.Provider>
-    );
+  return (
+    <ToastContext.Provider value={{showToast}}>
+      {children}
+      {toast.visible && (
+        <Toast
+          visible={toast.visible}
+          type={toast.type}
+          message={toast.message}
+        />
+      )}
+    </ToastContext.Provider>
+  );
 };
 
-// Custom hook to use toast anywhere
-const useToast = () => useContext(ToastContext);
-export default useToast;
+export const useToast = () => useContext(ToastContext);

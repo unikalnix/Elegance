@@ -4,13 +4,13 @@ import "./WishList.css";
 import { ShoppingCart, Trash } from "lucide-react";
 import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
 import useIsMobile from "../../hooks/useIsMobile";
-import shirt from "../../assets/images/shirt.jpeg";
+import { useCart } from "../../context/CartContext";
 
 // Component Function
 const WishList = () => {
   // Declarations
-  const inStock = false;
   const isMobile = useIsMobile();
+  const { wishListData, removeFromWishList, addToCart } = useCart();
 
   // Return Component
   return (
@@ -18,7 +18,7 @@ const WishList = () => {
       {/* Header Section */}
       <div className="wishlist__header">
         <h1 className="wishlist__title">My Wishlist</h1>
-        <p className="wishlist__count">3 item(s)</p>
+        <p className="wishlist__count">{wishListData.length} item{wishListData.length > 1 && 's'}</p>
       </div>
 
       {/* Breadcrumb Section */}
@@ -26,23 +26,23 @@ const WishList = () => {
 
       {/* Wishlist Items */}
       <div className="wishlist__items">
-        {[...Array(5)].map((_, i) => (
+        {wishListData.map((item, i) => (
           <div key={i} className="wishlist__item">
             {/* Product Info */}
             <div className="wishlist__item-info">
               <div className="wishlist__item-image">
-                <img src={shirt} alt="Product" className="wishlist__item-img" />
+                <img src={item.image} alt="Product" className="wishlist__item-img" />
               </div>
               <div className="wishlist__item-details">
-                <h1 className="wishlist__item-title">Premium Cotton Shirt</h1>
-                <p className="wishlist__item-price">$89.99</p>
+                <h1 className="wishlist__item-title">{item.title}</h1>
+                <p className="wishlist__item-price">${item.price}</p>
                 <p
                   style={{
-                    color: inStock ? "rgb(22, 163, 74)" : "rgb(220, 38, 38)",
+                    color: item.inStock ? "rgb(22, 163, 74)" : "rgb(220, 38, 38)",
                   }}
                   className="wishlist__item-status"
                 >
-                  {inStock ? "In Stock" : "Out of Stock"}
+                  {item.inStock ? "In Stock" : "Out of Stock"}
                 </p>
               </div>
             </div>
@@ -50,9 +50,10 @@ const WishList = () => {
             {/* Action Buttons */}
             <div className="wishlist__item-actions">
               <button
+              onClick={() => addToCart({_id:item._id, image: item.image})}
                 style={{
-                  background: inStock ? "black" : "#CDD1D7",
-                  cursor: inStock ? "pointer" : "auto",
+                  background: item.inStock ? "black" : "#CDD1D7",
+                  cursor: item.inStock ? "pointer" : "auto",
                 }}
                 className="wishlist__item-btn--add"
               >
@@ -62,7 +63,7 @@ const WishList = () => {
                 />
                 Add to Cart
               </button>
-              <button className="wishlist__item-btn--delete">
+              <button onClick={() => removeFromWishList(item._id)} className="wishlist__item-btn--delete">
                 <Trash size={20} stroke="red" />
               </button>
             </div>

@@ -1,10 +1,10 @@
 // Imports
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Card.css";
 import { Heart, ShoppingCartIcon } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useNavigate } from "react-router-dom";
-import useToast from "../../context/ToastContext";
+import { useCart } from "../../context/CartContext";
 
 // Component Function
 const Card = ({
@@ -18,13 +18,23 @@ const Card = ({
   isOnSale,
   discountPercentage,
   originalPrice,
+  inStock
 }) => {
   // Declarations
   const [isHovered, setIsHovered] = useState(false);
   const [isLike, setIsLike] = useState(false);
+  const [isAddToCart, setIsAddToCart] = useState(false);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-  const showToast = useToast();
+
+  const {
+    addToCart,
+    removeFromCart,
+    addToWishList,
+    removeFromWishList,
+    cartData,
+    wishListData,
+  } = useCart();
 
   // Return Component
   return (
@@ -76,14 +86,38 @@ const Card = ({
       {type === "sale" && (
         <div className="card-icons">
           <Heart
-            onClick={(e) => {e.stopPropagation();setIsLike((prev) => !prev)}}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsLike((prev) => !prev);
+              !isLike
+                ? addToWishList({ _id, image, title, price, inStock })
+                : removeFromWishList(_id);
+            }}
             size={40}
-            fill={isLike ? "red" : "#00000000"}
-            stroke={isLike ? "red" : "black"}
+            fill={wishListData.length > 0 && wishListData.find(item => item._id === _id) ? "red" : "#00000000"}
+            stroke={wishListData.length > 0 && wishListData.find(item => item._id === _id) ? "red" : "black"}
           />
           <ShoppingCartIcon
-            onClick={(e) => {e.stopPropagation();showToast("info", "Item added to cart");}}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsAddToCart((prev) => !prev);
+              !isAddToCart
+                ? addToCart({
+                    _id,
+                    image,
+                    title,
+                    price,
+                    colors: [],
+                    sizes: [],
+                  })
+                : removeFromCart(_id);
+            }}
             size={40}
+            fill={
+              cartData.length > 0 && cartData.find((item) => item._id === _id)
+                ? "black"
+                : "#00000000"
+            }
           />
         </div>
       )}

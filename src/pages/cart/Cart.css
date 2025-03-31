@@ -87,7 +87,7 @@
   margin-bottom: 0.25rem;
 }
 
-.cart__item-variants {
+.cart__item-variants span {
   font-size: 0.875rem;
   color: #666;
 }

@@ -35,7 +35,7 @@ const App = () => {
     // Simulate loading time
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust time as needed
+    }, 100); // Adjust time as needed
   }, []);
 
   // Functions
@@ -50,9 +50,10 @@ const App = () => {
   const toggleAuthModal = () => {
     setAuthModal((prev) => !prev);
   };
+
   // Return Component
   return loading ? (
-    <Loader /> 
+    <Loader />
   ) : (
     <>
       <Sidebar isOpen={sidebar} toggleSidebar={toggleSidebar} />

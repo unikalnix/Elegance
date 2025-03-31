@@ -1,19 +1,18 @@
 // Imports
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./NoProductFound.css"; // Importing CSS file
 import { ChevronLeft, ShoppingBag } from "lucide-react";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 // Component Function
 const NoProductFound = ({handleClearAllFilters}) => {
-  // Declarations
-  const navigate = useNavigate();
+  useScrollToTop();
 
   // Return Component
   return (
     <div className="no-products">
       <div className="no-products__back">
-        <button className="no-products__back-button">
+        <button onClick={handleClearAllFilters} className="no-products__back-button">
           <ChevronLeft size={18} />
           <span>Back to Shop</span>
         </button>

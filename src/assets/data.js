@@ -6,6 +6,8 @@ import prada from "../assets/images/prada-removebg-preview.png";
 import dior from "../assets/images/dior-removebg-preview.png";
 import chanel from "../assets/images/chanel-removebg-preview.png";
 import louis_vuitton from "../assets/images/louis_vuitton-removebg-preview.png";
+export const shippingFee = 5.0;
+export const taxFee = 5.0;
 
 // Exports
 export const categories = ["men", "women", "kids", "accessories", "sale"];
@@ -149,6 +151,7 @@ export const collection = [
     discountPercentage: 0,
     originalPrice: "79.99",
     category: "men",
+    inStock: true,
   },
   {
     _id: "2",
@@ -172,6 +175,7 @@ export const collection = [
     discountPercentage: 15,
     originalPrice: "79.99",
     category: "men",
+    inStock: true,
   },
   {
     _id: "3",
@@ -195,6 +199,7 @@ export const collection = [
     discountPercentage: 0,
     originalPrice: "59.99",
     category: "men",
+    inStock: false,
   },
   {
     _id: "4",
@@ -218,6 +223,7 @@ export const collection = [
     discountPercentage: 20,
     originalPrice: "159.99",
     category: "men",
+    inStock: false,
   },
 ];
 
