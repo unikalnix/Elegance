@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import { collection } from "../assets/data";
 import { useToast } from "./ToastContext";
+import axios from "axios";
 
 const CartContext = createContext();
 
@@ -9,34 +9,44 @@ export const CartProvider = ({ children }) => {
   const [wishListData, setWishListData] = useState([]);
   const { showToast } = useToast();
 
-  const addToCart = ({ _id, image = null, colors = [], sizes = [], quantity = 1 }) => {
-    const selectedItem = collection.find((item) => item._id === _id);
-    if (!selectedItem) return;
+  const addToCart = async ({ _id, image, colors, sizes, quantity = 1 }) => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/shop/products`);
+      if (res.data.success) {
+        const collection = res.data.products;
+        const selectedItem = collection.find((item) => item._id === _id);
+        if (!selectedItem) return;
+        setCartData((prev) => {
+          const existingItem = prev.find((item) => item._id === _id);
+          if (existingItem) {
+            return prev.map((item) =>
+              item._id === _id
+                ? { ...item, quantity: item.quantity + quantity }
+                : item
+            );
+          }
+          return [
+            ...prev,
+            {
+              _id,
+              title: selectedItem.title,
+              image,
+              colors,
+              sizes,
+              quantity,
+              price: selectedItem.price,
+            },
+          ];
+        });
 
-    setCartData((prev) => {
-      const existingItem = prev.find((item) => item._id === _id);
-      if (existingItem) {
-        return prev.map((item) =>
-          item._id === _id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+        showToast("success", "Added! Check your cart for details.");
+      } else {
+        showToast("error", "Error checking products");
       }
-      return [
-        ...prev,
-        {
-          _id,
-          title: selectedItem.title,
-          image,
-          colors,
-          sizes,
-          quantity,
-          price: selectedItem.price,
-        },
-      ];
-    });
 
-    showToast("success", "Added! Check your cart for details.");
+    } catch (error) {
+      showToast("error", error);
+    }
   };
 
   const removeFromCart = (_id) => {

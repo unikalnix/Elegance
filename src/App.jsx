@@ -8,7 +8,6 @@ import SearchModal from "./components/search-modal/SearchModal";
 import { Routes, Route } from "react-router-dom";
 import ShopPage from "./pages/shop/ShopPage";
 import NotFound from "./pages/not-found/NotFound";
-import AuthModal from "./components/auth-modal/AuthModal";
 import Checkout from "./pages/checkout/Checkout";
 import Orders from "./pages/orders/Orders";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -22,6 +21,7 @@ import Cart from "./pages/cart/Cart";
 import useScrollToTop from "./hooks/useScrollToTop";
 import Loader from "./components/loader/Loader";
 import AdminPanel from "./pages/admin-panel/AdminPanel";
+import AuthModal from "./components/auth-modal/AuthModal";
 
 // Component Function
 const App = () => {
@@ -61,12 +61,12 @@ const App = () => {
       <SearchModal isOpen={searchModal} toggleSearchModal={toggleSearchModal} />
       <AuthModal isOpen={authModal} toggleAuthModal={toggleAuthModal} />
       <Navbar
-        authModal={authModal}
-        toggleAuthModal={toggleAuthModal}
         sidebar={sidebar}
         toggleSidebar={toggleSidebar}
         searchModal={searchModal}
         toggleSearchModal={toggleSearchModal}
+        authModal={authModal}
+        toggleAuthModal={toggleAuthModal}
       />
       <Routes>
         <Route path="/" element={<HomePage />} />

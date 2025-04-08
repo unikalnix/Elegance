@@ -85,8 +85,9 @@
     position: relative;
 }
 
-.navbar-right .cart-icon{
+.navbar-right .cart-icon, .navbar-right .user-icon, .navbar-right .search-icon, .navbar-right .login-icon{
     position: relative;
+    cursor: pointer;
 }
 
 .navbar-right .cart-icon span{

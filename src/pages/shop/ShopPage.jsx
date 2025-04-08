@@ -1,5 +1,5 @@
 // Imports
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import Title from "../../components/title/Title";
 import { Filter, MoveLeftIcon, MoveRightIcon } from "lucide-react";
@@ -9,6 +9,7 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { useLocation } from "react-router-dom";
 import NoProductFound from "../../components/no-product-found/NoProductFound";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import axios from "axios";
 
 // Component Function
 const ShopPage = () => {
@@ -96,6 +97,23 @@ const ShopPage = () => {
     setPriceRange([0, 300]);
     setCurrentPage(1);
   };
+
+  // const fetchingProducts = async () => {
+  //   try {
+  //     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/shop/products`);
+  //     if (res.data.success) {
+  //      console.log([...res.data.products])
+  //     } else {
+  //       showToast("error", "Error fetching products");
+  //     }
+  //   } catch (error) {
+  //     showToast("error", error);
+  //   }
+  // }
+
+  // useEffect(() =>{
+  //   fetchingProducts();
+  // }, []);
 
   // Return Component
   return (

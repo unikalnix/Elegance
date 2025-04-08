@@ -120,8 +120,8 @@ const Cart = () => {
                     <td className="cart__item-total">
                       $
                       {Math.ceil(
-                        Number(item.price) * Number(quantities[index])
-                      )}
+                          Number(item.price) * Number(quantities[index])
+                        )}
                     </td>
                   </tr>
                 ))}
@@ -148,14 +148,16 @@ const Cart = () => {
             <h1 className="cart__summary-label">Subtotal</h1>
             <p className="cart__summary-total-value">
               $
-              {cartData.length > 0
+              {
+                cartData.length > 0
                 ? cartData.reduce(
                     (acc, item, index) =>
                       acc +
                       Math.ceil(Number(item.price) * Number(quantities[index])),
                     0
                   )
-                : 0}
+                : 0
+              }
             </p>
           </div>
           <div className="cart__summary-row">

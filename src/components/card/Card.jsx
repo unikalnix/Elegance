@@ -14,7 +14,7 @@ const Card = ({
   title,
   description,
   price,
-  isNew,
+  isNeww,
   isOnSale,
   discountPercentage,
   originalPrice,
@@ -26,7 +26,6 @@ const Card = ({
   const [isAddToCart, setIsAddToCart] = useState(false);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-
   const {
     addToCart,
     removeFromCart,
@@ -78,7 +77,7 @@ const Card = ({
 
       {type === "sale" && (
         <div className="flags">
-          {isNew && <span className="new-flag">New</span>}
+          {isNeww && <span className="new-flag">New</span>}
           {isOnSale && <span className="sale-flag">{discountPercentage}%</span>}
         </div>
       )}

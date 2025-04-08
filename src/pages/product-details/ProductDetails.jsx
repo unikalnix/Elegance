@@ -54,10 +54,6 @@ const ProductDetails = () => {
     }
   }, [id]);
 
-  useEffect(() =>{
-console.log(isLike)
-  }, [])
-
   if (!data) {
     return <h1>No Data Found</h1>;
   }

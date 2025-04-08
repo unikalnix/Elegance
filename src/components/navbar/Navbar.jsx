@@ -5,9 +5,9 @@ import { navItems } from "../../assets/data";
 import { Search, ShoppingCart, User, Menu, LogIn } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Link } from "react-router-dom";
-import useIsLogin from "../../hooks/useIsLogin";
 import Dropdown from "../ui/dropdown/Dropdown";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 
 // Component Function
 const Navbar = ({
@@ -23,8 +23,8 @@ const Navbar = ({
   const [showDropDown, setShowDropDown] = useState(false);
   const dropDownRef = useRef(null);
   const isMobile = useIsMobile();
-  const isLoggedIn = useIsLogin();
   const { cartData } = useCart();
+  const { isLogin } = useAuth();
 
   // Functions
   const handleScroll = () => {
@@ -47,6 +47,8 @@ const Navbar = ({
     };
   }, []);
 
+  useEffect(() => { setShowDropDown(false) }, [isLogin])
+
   useEffect(() => {
     if (sidebar || searchModal || authModal) {
       document.body.style.overflow = "hidden";
@@ -54,6 +56,10 @@ const Navbar = ({
       document.body.style.overflow = "auto";
     }
   }, [sidebar, searchModal, authModal]);
+
+  useEffect(() => {
+
+  }, [isLogin])
 
   // Return Component
   return (
@@ -87,12 +93,21 @@ const Navbar = ({
           <Link className="link" to="/admin">
             <button className="admin-nav-button">Admin</button>
           </Link>
-          <Search size={20} onClick={toggleSearchModal} />
-          {!isLoggedIn && <LogIn size={20} onClick={toggleAuthModal} />}
-          {isLoggedIn && (
+          {
+            isLogin &&
+            <Search
+              className="search-icon"
+              size={20}
+              onClick={toggleSearchModal}
+            />
+          }
+          {!isLogin && <LogIn onClick={toggleAuthModal} className="login-icon" size={20} />}
+          {
+            isLogin &&
             <>
               <div className="user-dropdown-wrapper">
                 <User
+                  className="user-icon"
                   size={20}
                   onClick={() => setShowDropDown((prev) => !prev)}
                 />
@@ -110,7 +125,7 @@ const Navbar = ({
                 <span>{cartData.length}</span>
               </div>
             </>
-          )}
+          }
           {isMobile && <Menu onClick={toggleSidebar} />}
         </div>
       </nav>

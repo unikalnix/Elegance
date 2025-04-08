@@ -1,16 +1,37 @@
 // Imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import Hero from "../../components/hero/Hero";
 import Card from "../../components/card/Card";
-import { brands, homeCategoriesData, collection } from "../../assets/data";
+import { brands, homeCategoriesData } from "../../assets/data";
 import { ArrowRight } from "lucide-react";
 import Title from "../../components/title/Title";
 import useIsMobile from "../../hooks/useIsMobile";
+import axios from "axios";
+import { useToast } from "../../context/ToastContext";
 
 // Component Function
 const HomePage = () => {
   const isMobile = useIsMobile();
+  const [collection, setCollection] = useState([]);
+  const { showToast } = useToast();
+
+  const fetchingProducts = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/shop/products`);
+      if (res.data.success) {
+        setCollection(res.data.products);
+      } else {
+        showToast("error", "Error fetching products");
+      }
+    } catch (error) {
+      showToast("error", `Something went wrong ${error}`);
+    }
+  }
+
+   useEffect(() => {
+    fetchingProducts();
+  }, []); 
 
   // Return Component
   return (
@@ -64,13 +85,17 @@ const HomePage = () => {
           {collection.slice(0, 4).map((item) => {
             return (
               <Card
-              _id={item._id}
+                _id={item._id}
                 key={item._id}
                 type={item.type}
                 image={item.image}
                 title={item.title}
                 price={item.price}
-                isNew={item.isNew}
+                isNeww={item.isNeww}
+                isOnSale={item.isOnSale}
+                discountPercentage={item.discountPercentage}
+                originalPrice={item.originalPrice}
+                inStock={item.inStock}
               />
             );
           })}
@@ -107,7 +132,7 @@ const HomePage = () => {
           {collection.slice(0, 4).map((item) => {
             return (
               <Card
-              _id={item._id}
+                _id={item._id}
                 key={item._id}
                 type={item.type}
                 image={item.image}

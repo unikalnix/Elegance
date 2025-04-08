@@ -150,7 +150,7 @@ export const collection = [
     image: shirt,
     discountPercentage: 0,
     originalPrice: "79.99",
-    category: "men",
+    category: "kids",
     inStock: true,
   },
   {
@@ -224,33 +224,5 @@ export const collection = [
     originalPrice: "159.99",
     category: "men",
     inStock: false,
-  },
-];
-
-export const users = [
-  {
-    _id: 1,
-    username: "hello",
-    password: "123",
-  },
-  {
-    _id: 2,
-    username: "john_doe",
-    password: "pass456",
-  },
-  {
-    _id: 3,
-    username: "jane_smith",
-    password: "secure789",
-  },
-  {
-    _id: 4,
-    username: "mark_tech",
-    password: "tech@2024",
-  },
-  {
-    _id: 5,
-    username: "emma_dev",
-    password: "devpass321",
   },
 ];

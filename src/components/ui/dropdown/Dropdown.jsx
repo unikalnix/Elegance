@@ -3,12 +3,14 @@ import React from "react";
 import "./Dropdown.css";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
+import { useAuth } from "../../../context/AuthContext";
 
 // Component Function
 const Dropdown = ({ dropDownRef, toggleDropDown }) => {
   // Declarations
   const navigate = useNavigate();
-  const {wishListData} = useCart();
+  const { wishListData } = useCart();
+  const { handleLogout } = useAuth();
 
   // Return Component
   return (
@@ -59,7 +61,12 @@ const Dropdown = ({ dropDownRef, toggleDropDown }) => {
         >
           Settings
         </li>
-        <li className="dropdown__item dropdown__item--signout">Sign Out</li>
+        <li
+          onClick={() => handleLogout()}
+          className="dropdown__item dropdown__item--signout"
+        >
+          Sign Out
+        </li>
       </ul>
     </div>
   );
