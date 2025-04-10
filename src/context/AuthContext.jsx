@@ -2,12 +2,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useToast } from "./ToastContext";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useCart } from "./CartContext";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const { showToast } = useToast();
+  const {getCart} = useCart();
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -17,14 +19,16 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const handleLogin = async (loginData, authMode) => {
+    const cartData = JSON.parse(localStorage.getItem("_ucd") || "[]");
     if (authMode === "signup") {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, loginData, {
-          withCredentials: true, // Important for cookies
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, { ...loginData, guestCart: cartData }, {
+          withCredentials: true,
         });
         if (res.data.success) {
           setIsLogin(true);
           showToast("success", res.data.message);
+          await getCart();
           return true;
         } else {
           showToast("error", res.data.message);
@@ -37,11 +41,12 @@ export const AuthProvider = ({ children }) => {
     } else if (authMode === "login") {
       try {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, loginData, {
-          withCredentials: true, // Important for cookies
+          withCredentials: true,
         });
         if (res.data.success) {
           setIsLogin(true);
           showToast("success", res.data.message);
+          await getCart();
           return true;
         } else {
           showToast("error", res.data.message);
@@ -60,6 +65,7 @@ export const AuthProvider = ({ children }) => {
       if (res.data.success) {
         setIsLogin(false);
         showToast("info", res.data.message);
+        await getCart();
       } else {
         showToast("error", res.data.message);
       }

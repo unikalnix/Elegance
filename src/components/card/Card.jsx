@@ -93,8 +93,8 @@ const Card = ({
                 : removeFromWishList(_id);
             }}
             size={40}
-            fill={wishListData.length > 0 && wishListData.find(item => item._id === _id) ? "red" : "#00000000"}
-            stroke={wishListData.length > 0 && wishListData.find(item => item._id === _id) ? "red" : "black"}
+            fill={wishListData.length > 0 && wishListData.find(item => item.wishlistId === _id) ? "red" : "#00000000"}
+            stroke={wishListData.length > 0 && wishListData.find(item => item.wishlistId === _id) ? "red" : "black"}
           />
           <ShoppingCartIcon
             onClick={(e) => {
@@ -103,17 +103,18 @@ const Card = ({
               !isAddToCart
                 ? addToCart({
                     _id,
-                    image,
                     title,
                     price,
                     colors: [],
                     sizes: [],
+                    image,
+                    price
                   })
                 : removeFromCart(_id);
             }}
             size={40}
             fill={
-              cartData.length > 0 && cartData.find((item) => item._id === _id)
+              cartData.length > 0 && cartData.find((item) => item.productId === _id)
                 ? "black"
                 : "#00000000"
             }

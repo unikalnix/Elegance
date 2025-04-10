@@ -1,121 +1,101 @@
-// Imports
 import React, { useEffect, useState } from "react";
 import "./ShopPage.css";
 import Title from "../../components/title/Title";
-import { Filter, MoveLeftIcon, MoveRightIcon } from "lucide-react";
-import { categories, collection } from "../../assets/data";
 import Card from "../../components/card/Card";
-import useIsMobile from "../../hooks/useIsMobile";
-import { useLocation } from "react-router-dom";
-import NoProductFound from "../../components/no-product-found/NoProductFound";
-import useScrollToTop from "../../hooks/useScrollToTop";
+import { useToast } from "../../context/ToastContext";
 import axios from "axios";
 
-// Component Function
 const ShopPage = () => {
-  useScrollToTop();
-  // Declarations
-  let sortedCollection = [...collection];
-  const itemsPerPage = 12;
-  const [sort, setSort] = useState("all");
+  const categories = ['men', 'women', 'kids', 'accessories', 'sale'];
+  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isSaleChecked, setIsSaleChecked] = useState(false);
-  const [priceRange, setPriceRange] = useState([0, 300]);
-  const isMobile = useIsMobile();
-  const [filterBar, setFilterBar] = useState(isMobile);
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const searchQuery = queryParams.get("search") || "";
+  const [minRange, setMinRange] = useState(0);
+  const [maxRange, setMaxRange] = useState(300);
+  const [sortOption, setSortOption] = useState('all');
+  const { showToast } = useToast();
 
-  // Functions
-  const onChangeHandler = (e) => {
-    setSort(e.target.value);
-  };
+  const categoriesSelectionHandler = (e) => {
+    const isChecked = e.target.checked;
+    const value = e.target.value;
+    setSelectedCategories(prev => isChecked ? [...prev, value] : prev.filter(val => val !== value));
+  }
 
-  const getSortedCollection = () => {
+  const priceRangeHandler = (e) => {
+    setMaxRange(e.target.value);
+  }
+
+  const sortHandler = (e) => {
+    setSortOption(e.target.value);
+  }
+
+  const applyFilters = () => {
+    let filtered = allProducts;
+
     if (selectedCategories.length > 0) {
-      sortedCollection = sortedCollection.filter((item) =>
-        selectedCategories.includes(item.category)
+      filtered = filtered.filter(product =>
+        selectedCategories.includes(product.category)
       );
+
+      if (selectedCategories.includes('sale')) {
+        filtered = filtered.filter(product => product.isOnSale);
+      }
+
+      if (selectedCategories.length === 1 && selectedCategories.includes('sale')) {
+        filtered = allProducts.filter(product => product.isOnSale);
+      }
     }
-    if (isSaleChecked) {
-      sortedCollection = sortedCollection.filter((item) => item.isOnSale);
-    }
-    if (searchQuery) {
-      sortedCollection = sortedCollection.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    sortedCollection = sortedCollection.filter(
-      (item) => item.price >= priceRange[0] && item.price <= priceRange[1]
-    );
-    switch (sort.toLowerCase()) {
+
+    filtered = filtered.filter(product => Number(product.price) <= maxRange);
+
+    switch (sortOption.toLowerCase()) {
       case "featured":
-        sortedCollection = sortedCollection.filter((item) => item.isFeatured);
+        filtered = filtered.filter((item) => item.isFeatured);
         break;
       case "newest arrivals":
-        sortedCollection = sortedCollection.filter((item) => item.isNew);
+        filtered = filtered.filter((item) => item.isNeww);
         break;
       case "low to high":
-        sortedCollection = sortedCollection.sort((a, b) => a.price - b.price);
+        filtered = [...filtered].sort((a, b) => a.price - b.price);
         break;
       case "high to low":
-        sortedCollection = sortedCollection.sort((a, b) => b.price - a.price);
+        filtered = [...filtered].sort((a, b) => b.price - a.price);
         break;
       default:
-        return sortedCollection;
+        break;
     }
-    return sortedCollection;
-  };
-  const totalPages = Math.ceil(getSortedCollection().length / itemsPerPage);
-  const paginatedCollection = getSortedCollection().slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
-  const handleCategoryChange = (e) => {
-    const { value, checked } = e.target;
-    setSelectedCategories((prev) =>
-      checked ? [...prev, value] : prev.filter((category) => category !== value)
-    );
+    setProducts(filtered);
   };
 
-  const handleSaleChange = (e) => {
-    setIsSaleChecked(e.target.checked);
-  };
+  const clearFilters = () => {
+    setSelectedCategories([]); // Uncheck all checkboxes
+    setMaxRange(300); // Reset max range to 300
+    setSortOption('all'); // Reset sort option to 'all'
+  }
 
-  const handlePriceRangeChange = (e) => {
-    const value = Number(e.target.value);
-    setPriceRange([0, value]);
-  };
+  useEffect(() => {
+    applyFilters();
+  }, [allProducts, selectedCategories, maxRange, sortOption]);
 
-  const handleClearAllFilters = () => {
-    setSort("all");
-    setSelectedCategories([]);
-    setIsSaleChecked(false);
-    setPriceRange([0, 300]);
-    setCurrentPage(1);
-  };
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/shop/products`);
+      if (res.data.success) {
+        setProducts([...res.data.products]);
+        setAllProducts([...res.data.products]);
+      } else {
+        showToast("error", "Error fetching products");
+      }
+    } catch (error) {
+      showToast("error", error);
+    }
+  }
 
-  // const fetchingProducts = async () => {
-  //   try {
-  //     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/shop/products`);
-  //     if (res.data.success) {
-  //      console.log([...res.data.products])
-  //     } else {
-  //       showToast("error", "Error fetching products");
-  //     }
-  //   } catch (error) {
-  //     showToast("error", error);
-  //   }
-  // }
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  // useEffect(() =>{
-  //   fetchingProducts();
-  // }, []);
-
-  // Return Component
   return (
     <section>
       <Title
@@ -123,140 +103,68 @@ const ShopPage = () => {
         description="Discover our curated selection of premium clothing and accessories for every occasion."
       />
       <div className="shop-container">
-        <aside
-          style={{
-            position: filterBar && "fixed",
-            transform: filterBar && "translateY(-200%)",
-          }}
-          className="filters"
-        >
+        <aside className="filters">
           <div className="top-layer">
             <h1>Filters</h1>
-            <h2 onClick={handleClearAllFilters} style={{ cursor: "pointer" }}>
-              Clear all
-            </h2>
+            <h2 style={{ cursor: "pointer" }} onClick={clearFilters}>Clear all</h2>
           </div>
           <div className="middle-layer">
             <h1>Categories</h1>
             <div className="filters--checkbox-buttons">
-              {categories.map((category, index) => {
-                return (
-                  <div key={index} className="filters-checkbox-field">
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="input"
-                        name={category}
-                        value={category}
-                        checked={selectedCategories.includes(category)}
-                        onChange={handleCategoryChange}
-                      />
-                      <span className="custom-checkbox"></span>
-                      {category}
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="filters-salecheckbox-field">
-              <label>
-                <input
-                  type="checkbox"
-                  className="input"
-                  name="sale"
-                  value="sale"
-                  checked={isSaleChecked}
-                  onChange={handleSaleChange}
-                />
-                <span className="custom-checkbox"></span>
-                Sale
-              </label>
+              {categories.map((category, index) => (
+                <div key={index} className="filters-checkbox-field">
+                  <label>
+                    <input
+                      onChange={categoriesSelectionHandler}
+                      value={category}
+                      type="checkbox" className="input"
+                      checked={selectedCategories.includes(category)}
+                    />
+                    <span className="custom-checkbox"></span>
+                    {category}
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
           <hr />
           <div className="bottom-layer">
             <h1>Price Range</h1>
-            <input
-              type="range"
-              min="0"
-              max="300"
-              value={priceRange[1]}
-              onChange={handlePriceRangeChange}
-            />
+            <input onChange={priceRangeHandler} type="range" min="0" max="300" value={maxRange} />
             <div className="filters--price-range-prices">
-              <span>{priceRange[0]}$</span>
-              <span>{priceRange[1]}$</span>
+              <span>{minRange}$</span>
+              <span>{maxRange}$</span>
             </div>
           </div>
         </aside>
         <main className="shop-main">
-          {getSortedCollection().length > 0 ? (
-            <>
-              <div className="top-layer">
-                <h1>Showing {getSortedCollection().length} products</h1>
-                <select defaultValue={sort} onChange={onChangeHandler}>
-                  <option value="all">All</option>
-                  <option value="featured">Featured</option>
-                  <option value="newest arrivals">Newest Arrivals</option>
-                  <option value="low to high">Low to High</option>
-                  <option value="high to low">High to Low</option>
-                </select>
-                {/* Sort and filter */}
-                {isMobile && (
-                  <div className="sort-and-filter">
-                    <Filter
-                      onClick={() => setFilterBar((prev) => !prev)}
-                      stroke="rgb(116, 103, 117)"
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="middle-layer">
-                {paginatedCollection.map((item) => {
-                  return (
-                    <Card
-                      key={item._id}
-                      _id={item._id}
-                      type={item.type}
-                      title={item.title}
-                      price={item.price}
-                      isNew={item.isOnSale ? undefined : item.isNew}
-                      isOnSale={item.isOnSale}
-                      image={item.image}
-                      discountPercentage={
-                        item.isOnSale ? item.discountPercentage : undefined
-                      }
-                      originalPrice={
-                        item.isOnSale ? item.originalPrice : undefined
-                      }
-                      inStock={item.inStock}
-                    />
-                  );
-                })}
-              </div>
-              <div className="bottom-layer">
-                <div
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                >
-                  <MoveLeftIcon size={15} />
-                </div>
-                <div>
-                  {currentPage} of {totalPages}
-                </div>
-                <div
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                >
-                  <MoveRightIcon size={15} />
-                </div>
-              </div>
-            </>
-          ) : (
-            <NoProductFound handleClearAllFilters={handleClearAllFilters} />
-          )}
+          <div className="top-layer">
+            <h1>Showing {products.length} products</h1>
+            <select value={sortOption} onChange={sortHandler}>
+              <option value="all">All</option>
+              <option value="featured">Featured</option>
+              <option value="newest arrivals">Newest Arrivals</option>
+              <option value="low to high">Low to High</option>
+              <option value="high to low">High to Low</option>
+            </select>
+          </div>
+          <div className="middle-layer">
+            {products.length === 0 ? <p>Loading...</p>: products.map((product) => (
+              <Card
+                key={product._id}
+                _id={product._id}
+                type={product.type}
+                image={product.image}
+                title={product.title}
+                price={product.price}
+                isNeww={product.isNeww}
+                isOnSale={product.isOnSale}
+                discountPercentage={product.discountPercentage}
+                originalPrice={product.originalPrice}
+                inStock={product.inStock}
+              />
+            ))}
+          </div>
         </main>
       </div>
     </section>

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import "./Checkout.css";
 import * as lucide from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import shirt from "../../assets/images/shirt.jpeg";
 import { useCart } from "../../context/CartContext";
 import { shippingFee, taxFee } from "../../assets/data";
 
@@ -84,17 +83,17 @@ const Checkout = () => {
                   <div className="checkout__summary-details">
                     <h3 className="checkout__summary-name">{item.title}</h3>
                     <p className="checkout__summary-variant">
-                      {item.colors.map((color, index) => (
+                      {item.color.map((clr, index) => (
                         <span key={index}>
-                          {color}
-                          {index !== item.colors.length - 1 > 0 && ", "}
+                          {clr}
+                          {index !== item.color.length - 1 > 0 && ", "}
                         </span>
                       ))}
                       , Size{" "}
-                      {item.sizes.map((size, index) => (
+                      {item.size.map((sz, index) => (
                         <span key={index}>
-                          {size}
-                          {index !== item.sizes.length - 1 > 0 && ", "}
+                          {sz}
+                          {index !== item.size.length - 1 > 0 && ", "}
                         </span>
                       ))}
                     </p>

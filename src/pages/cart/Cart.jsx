@@ -6,28 +6,47 @@ import { ChevronLeftIcon, Trash } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { shippingFee, taxFee } from "../../assets/data";
+import Cookies from "js-cookie";
 
 // Component Function
 const Cart = () => {
   // Declarations
   const navigate = useNavigate();
-  const { cartData, updateCart, removeFromCart } = useCart();
-  const [quantities, setQuantities] = useState(
-    cartData.map((item) => item.quantity)
-  );
-  // Functions
-  const handleCartUpdate = () => {
-    const updatedCart = cartData.map((item, index) => ({
-      ...item,
-      quantity: quantities[index],
-    }));
-    updateCart(updatedCart);
+  const { cartData, getCart, removeFromCart, updateCart } = useCart();
+  const [quantities, setQuantities] = useState([])
+  const subtotal = cartData.reduce((acc, item, index) => {
+    return acc + item.price * (quantities[index] || item.quantity);
+  }, 0);
+  const total = subtotal + shippingFee + taxFee;
+
+
+  const updateQuantities = (increase, index) => {
+    setQuantities(prevQuantities =>
+      prevQuantities.map((qty, i) => {
+        if (i === index) {
+          const newQty = increase ? qty + 1 : Math.max(qty - 1, 1);
+          return newQty;
+        }
+        return qty;
+      })
+    );
   };
+
+
+  useEffect(() => {
+    getCart();
+  }, [])
+
+  useEffect(() => {
+    if (cartData.length > 0) {
+      setQuantities(cartData.map(item => item.quantity));
+    }
+  }, [cartData])
 
   // Return Component
   return (
     <div className="cart">
-      <Breadcrumb links={["Home", "Shopping Cart"]} />
+      <Breadcrumb links={["Home", "Cart"]} />
       <h1 className="cart__title">Shopping Cart</h1>
       <div className="cart__container">
         {/* Cart items */}
@@ -54,29 +73,29 @@ const Cart = () => {
                           <h1 className="cart__item-title">{item.title}</h1>
                           <p className="cart__item-variants">
                             {/* Color: White, Size: M */}
-                            {item.colors.length > 0 &&
-                              item.colors.map((color, index) => {
+                            {item.color.length > 0 &&
+                              item.color.map((color, index) => {
                                 return (
                                   <span key={index}>
                                     {color}
-                                    {index !== item.colors.length - 1 && ","}
+                                    {index !== item.color.length - 1 && ","}
                                   </span>
                                 );
                               })}
                             <br />
-                            {item.sizes.length > 0 &&
-                              item.sizes.map((size, index) => {
+                            {item.size.length > 0 &&
+                              item.size.map((size, index) => {
                                 return (
                                   <span key={index}>
                                     {size}
-                                    {index !== item.sizes.length - 1 && ","}
+                                    {index !== item.size.length - 1 && ","}
                                   </span>
                                 );
                               })}
                           </p>
                         </div>
                         <div className="cart__item-remove">
-                          <Trash onClick={() => removeFromCart(item._id)} />
+                          <Trash onClick={() => removeFromCart(item.productId)} />
                         </div>
                       </div>
                     </td>
@@ -87,30 +106,18 @@ const Cart = () => {
                       <div className="cart__quantity-control">
                         <div
                           className="cart__quantity-decrease"
-                          onClick={() => {
-                            if (quantities[index] > 1) {
-                              setQuantities((prev) =>
-                                prev.map((qty, i) =>
-                                  i === index ? qty - 1 : qty
-                                )
-                              );
-                            }
-                          }}
+                          onClick={() => updateQuantities(false, index)}
                         >
                           -
                         </div>
                         <div className="cart__quantity-value">
-                          {quantities[index]}
+                          {
+                            quantities[index]
+                          }
                         </div>
                         <div
                           className="cart__quantity-increase"
-                          onClick={() =>
-                            setQuantities((prev) =>
-                              prev.map((qty, i) =>
-                                i === index ? qty + 1 : qty
-                              )
-                            )
-                          }
+                          onClick={() => updateQuantities(true, index)}
                         >
                           +
                         </div>
@@ -118,10 +125,7 @@ const Cart = () => {
                     </td>
 
                     <td className="cart__item-total">
-                      $
-                      {Math.ceil(
-                          Number(item.price) * Number(quantities[index])
-                        )}
+                      ${(item.price * quantities[index]).toFixed(2)}
                     </td>
                   </tr>
                 ))}
@@ -135,7 +139,13 @@ const Cart = () => {
               <ChevronLeftIcon />
               Continue Shopping
             </button>
-            <button onClick={handleCartUpdate} className="cart__update">
+            <button onClick={() => {
+              const updatedCart = cartData.map((item, index) => ({
+                _id: item.productId,
+                quantity: quantities[index]
+              }));
+              updateCart(updatedCart);
+            }} className="cart__update">
               Update Cart
             </button>
           </div>
@@ -147,17 +157,7 @@ const Cart = () => {
           <div className="cart__summary-row">
             <h1 className="cart__summary-label">Subtotal</h1>
             <p className="cart__summary-total-value">
-              $
-              {
-                cartData.length > 0
-                ? cartData.reduce(
-                    (acc, item, index) =>
-                      acc +
-                      Math.ceil(Number(item.price) * Number(quantities[index])),
-                    0
-                  )
-                : 0
-              }
+              ${subtotal.toFixed(2)}
             </p>
           </div>
           <div className="cart__summary-row">
@@ -172,17 +172,7 @@ const Cart = () => {
           <div className="cart__summary-total">
             <h1 className="cart__summary-total-label">Total</h1>
             <p className="cart__summary-total-value">
-              $
-              {cartData.length > 0
-                ? cartData.reduce(
-                    (acc, item, index) => {
-                      const price = Number(item.price);
-                      const quantity = Number(quantities[index]);
-                      return acc + Math.ceil(price * quantity);
-                    },
-                    Number(shippingFee) + Number(taxFee) // Ensure fees are added correctly
-                  )
-                : Number(shippingFee) + Number(taxFee)}
+              ${total.toFixed(2)}
             </p>
           </div>
           <button

@@ -29,9 +29,9 @@ const HomePage = () => {
     }
   }
 
-   useEffect(() => {
+  useEffect(() => {
     fetchingProducts();
-  }, []); 
+  }, []);
 
   // Return Component
   return (
@@ -82,7 +82,7 @@ const HomePage = () => {
               />
             </h6>
           )}
-          {collection.slice(0, 4).map((item) => {
+          {collection.filter(item => item.isNeww && !item.isOnSale).slice(0, 4).map((item) => {
             return (
               <Card
                 _id={item._id}
@@ -129,7 +129,7 @@ const HomePage = () => {
               />
             </h6>
           )}
-          {collection.slice(0, 4).map((item) => {
+          {collection.filter(item => item.isOnSale).slice(0, 4).map((item) => {
             return (
               <Card
                 _id={item._id}

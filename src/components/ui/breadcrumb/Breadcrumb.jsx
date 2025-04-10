@@ -14,7 +14,7 @@ const Breadcrumb = ({ links }) => {
       {links.map((link, i) => {
         return (
           <span
-            onClick={() => navigate(link === "home" ? "/" : `/${link}`)}
+            onClick={() => navigate(link.toLowerCase() === "home" ? "/" : `/${link}`)}
             className={`breadcrumb__item ${
               i === links.length - 1 ? "breadcrumb__item--active" : ""
             }`}

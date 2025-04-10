@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useToast } from "./ToastContext";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const CartContext = createContext();
 
@@ -9,54 +10,114 @@ export const CartProvider = ({ children }) => {
   const [wishListData, setWishListData] = useState([]);
   const { showToast } = useToast();
 
-  const addToCart = async ({ _id, image, colors, sizes, quantity = 1 }) => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/shop/products`);
-      if (res.data.success) {
-        const collection = res.data.products;
-        const selectedItem = collection.find((item) => item._id === _id);
-        if (!selectedItem) return;
-        setCartData((prev) => {
-          const existingItem = prev.find((item) => item._id === _id);
-          if (existingItem) {
-            return prev.map((item) =>
-              item._id === _id
-                ? { ...item, quantity: item.quantity + quantity }
-                : item
-            );
-          }
-          return [
-            ...prev,
-            {
-              _id,
-              title: selectedItem.title,
-              image,
-              colors,
-              sizes,
-              quantity,
-              price: selectedItem.price,
-            },
-          ];
-        });
+  const getCart = async () => {
+    const token = Cookies.get("token");
+    if (token) {
+      JSON.parse(localStorage.getItem("_ucd")) && localStorage.setItem("_ucd", JSON.stringify([]));
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/cart/get`, { withCredentials: true });
+        if (res.data.success) {
+          setCartData(res.data.cart);
+        } else {
+          showToast("error", res.data.message);
+        }
+      } catch (error) {
+        showToast("error", error);
+      }
+    } else {
+      setCartData(JSON.parse(localStorage.getItem("_ucd") || []));
+    }
 
-        showToast("success", "Added! Check your cart for details.");
+  };
+
+  const addToCart = async ({ _id, colors, sizes, quantity = 1, image, price, title }) => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      try {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add`, { _id, quantity, size: sizes, color: colors }, { withCredentials: true });
+        await getCart();
+        if (res.data.success) {
+          showToast("success", res.data.message);
+        } else {
+          showToast("error", res.data.message);
+        }
+      } catch (error) {
+        showToast("error", error);
+      }
+    } else {
+      const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
+      const index = cartData.findIndex(item => item.productId === _id);
+      if (index !== -1) {
+        cartData[index].size = sizes;
+        cartData[index].color = colors;
+        cartData[index].quantity += quantity;
       } else {
-        showToast("error", "Error checking products");
+        cartData.push({ productId: _id, title, size: sizes, color: colors, quantity, image, price })
       }
 
-    } catch (error) {
-      showToast("error", error);
+      localStorage.setItem("_ucd", JSON.stringify(cartData))
+      setCartData(cartData);
+      showToast("success", "Item added to cart")
+
     }
+
   };
 
-  const removeFromCart = (_id) => {
-    setCartData((prev) => prev.filter((item) => item._id !== _id));
-    showToast("info", "Removed! Let us know if you change your mind.");
+  const removeFromCart = async (_id) => {
+    const token = Cookies.get("token");
+    if (token) {
+      try {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/remove`, { _id }, { withCredentials: true });
+        await getCart();
+        if (res.data.success) {
+          showToast("info", res.data.message);
+        } else {
+          showToast("error", res.data.message);
+        }
+      } catch (error) {
+        showToast("error", error);
+      }
+    } else {
+      const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
+      const updatedCart = cartData.filter(item => item.productId !== _id);
+      localStorage.setItem("_ucd", JSON.stringify(updatedCart));
+      setCartData(updatedCart)
+      showToast("info", "Item removed")
+    }
+
   };
 
-  const updateCart = (updatedCart) => {
-    setCartData(updatedCart);
-    showToast("success", "Changes saved! Ready to checkout?");
+  const updateCart = async (updatedCart) => {
+    const token = Cookies.get("token");
+    if (token) {
+      try {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/update`, updatedCart, { withCredentials: true });
+        if (res.data.success) {
+          showToast("success", res.data.message);
+          await getCart();
+        } else {
+          showToast("error", res.data.message);
+        }
+      } catch (error) {
+        showToast("error", error);
+      }
+    } else {
+      if (cartData.length > 0) {
+        const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
+        for (let i = 0; i < cartData.length; i++) {
+          cartData[i].quantity = updatedCart[i].quantity;
+          // cartData[i].totalPrice = parseFloat(cartData[i].quantity * cartData[i].price);
+        }
+
+        localStorage.setItem("_ucd", JSON.stringify(cartData));
+        showToast("success", "Cart updated")
+      } else {
+        showToast("info", "Your cart is empty")
+      }
+
+
+    }
   };
 
   const addToWishList = ({ _id, image, title, inStock, price }) => {
@@ -103,6 +164,7 @@ export const CartProvider = ({ children }) => {
         wishListData,
         addToWishList,
         removeFromWishList,
+        getCart
       }}
     >
       {children}

@@ -93,14 +93,19 @@ const Navbar = ({
           <Link className="link" to="/admin">
             <button className="admin-nav-button">Admin</button>
           </Link>
-          {
-            isLogin &&
-            <Search
-              className="search-icon"
-              size={20}
-              onClick={toggleSearchModal}
-            />
-          }
+          <div className="cart-icon">
+            <Link className="link text-black" to="/cart">
+              <ShoppingCart size={20} />
+            </Link>
+            <span>{cartData.length}</span>
+          </div>
+
+          <Search
+            className="search-icon"
+            size={20}
+            onClick={toggleSearchModal}
+          />
+
           {!isLogin && <LogIn onClick={toggleAuthModal} className="login-icon" size={20} />}
           {
             isLogin &&
@@ -117,12 +122,6 @@ const Navbar = ({
                     toggleDropDown={() => setShowDropDown((prev) => !prev)}
                   />
                 )}
-              </div>
-              <div className="cart-icon">
-                <Link className="link text-black" to="/cart">
-                  <ShoppingCart size={20} />
-                </Link>
-                <span>{cartData.length}</span>
               </div>
             </>
           }

@@ -50,7 +50,7 @@ const WishList = () => {
             {/* Action Buttons */}
             <div className="wishlist__item-actions">
               <button
-              onClick={() => addToCart({_id:item._id, image: item.image})}
+              onClick={() => addToCart({_id:item._id})}
                 style={{
                   background: item.inStock ? "black" : "#CDD1D7",
                   cursor: item.inStock ? "pointer" : "auto",
